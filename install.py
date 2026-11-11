@@ -88,12 +88,15 @@ def find_candidate_ports():
             except Exception:
                 pass
         elif base.is_dir():
-            for p_file in base.glob("**/DevToolsActivePort"):
+            candidates_port = [base / "DevToolsActivePort"]
+            candidates_port.extend(base.glob("*/DevToolsActivePort"))
+            for p_file in candidates_port:
                 try:
-                    with open(p_file, "r", encoding="utf-8") as f:
-                        val = f.readline().strip()
-                        if val.isdigit():
-                            ports.add(int(val))
+                    if p_file.is_file():
+                        with open(p_file, "r", encoding="utf-8") as f:
+                            val = f.readline().strip()
+                            if val.isdigit():
+                                ports.add(int(val))
                 except Exception:
                     pass
 
@@ -300,26 +303,56 @@ WantedBy=default.target
         except Exception:
             pass
 
-def run_watcher(css_content):
+def run_watcher():
     """
-    Watches for active Antigravity Electron instances and ensures the theme
-    is persistently applied whenever windows open or reload.
+    Efficient event-driven watcher for theme.css changes and new Antigravity instances.
+    Consumes ~0.0% CPU by sleeping and only injecting on actual file edits or new windows.
     """
-    print("[*] Antigravity Theme Watcher started in background...")
+    last_mtime = 0
+    cached_css = ""
+    known_targets = set()
+
     while True:
         try:
-            inject_theme(css_content, verbose=False)
+            # 1. Detect if theme.css was modified on disk
+            if THEME_CSS_FILE.exists():
+                mtime = THEME_CSS_FILE.stat().st_mtime
+                if mtime != last_mtime:
+                    last_mtime = mtime
+                    with open(THEME_CSS_FILE, "r", encoding="utf-8") as f:
+                        cached_css = f.read()
+                    known_targets.clear()  # Force re-injection to all targets on CSS change
+                    inject_theme(cached_css, verbose=False)
+
+            # 2. Check for newly spawned Antigravity targets without spamming WebSockets
+            ports = find_candidate_ports()
+            current_targets = set()
+            for port in ports:
+                try:
+                    req = urllib.request.Request(f"http://127.0.0.1:{port}/json")
+                    with urllib.request.urlopen(req, timeout=0.8) as resp:
+                        targets = json.loads(resp.read().decode())
+                        for t in targets:
+                            if t.get("type") == "page":
+                                current_targets.add((port, t["id"]))
+                except Exception:
+                    pass
+
+            new_targets = current_targets - known_targets
+            if new_targets and cached_css:
+                inject_theme(cached_css, verbose=False)
+                known_targets = current_targets
+            elif current_targets != known_targets:
+                known_targets = current_targets
+
         except Exception:
             pass
-        time.sleep(2.5)
+
+        time.sleep(3.0)
 
 def main():
     if "--watch" in sys.argv:
-        if not THEME_CSS_FILE.exists():
-            sys.exit(1)
-        with open(THEME_CSS_FILE, "r", encoding="utf-8") as f:
-            css = f.read()
-        run_watcher(css)
+        run_watcher()
         return
 
     print("=" * 64)

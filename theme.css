@@ -1297,34 +1297,90 @@ div[role="dialog"] nav button.bg-sidebar-secondary,
     font-weight: 900 !important;
 }
 
-/* ==========================================================================
-   Segmented Controls & Toggle Groups (Settings & Modals)
-   ========================================================================== */
-div[data-slot="toggle-group"] {
-    background-color: #F4EEDD !important; /* Retro comic cream track */
-    border: 2.5px solid #000000 !important;
-    box-shadow: 3px 3px 0px #000000 !important;
-    border-radius: 12px !important;
-    padding: 3px !important;
-    gap: 4px !important;
-    display: inline-flex !important;
-    align-items: center !important;
+/* Settings Modal Scrollbar & Scroll Container Fix */
+div[role="dialog"] * {
+    overscroll-behavior: auto !important;
+}
+
+div[role="dialog"] .overflow-auto,
+div[role="dialog"] .overflow-y-auto {
+    scrollbar-width: thin !important;
+    scrollbar-color: #FFE600 #F4EEDD !important;
+    overscroll-behavior: auto !important;
+}
+
+div[role="dialog"] ::-webkit-scrollbar,
+div[role="dialog"] .overflow-auto::-webkit-scrollbar,
+div[role="dialog"] .overflow-y-auto::-webkit-scrollbar {
+    display: block !important;
+    width: 10px !important;
+    height: 10px !important;
+}
+
+div[role="dialog"] ::-webkit-scrollbar-track {
+    background: #F4EEDD !important;
+    border-left: 2px solid #000000 !important;
+}
+
+div[role="dialog"] ::-webkit-scrollbar-thumb {
+    background: #FFE600 !important;
+    border: 2px solid #000000 !important;
+    border-radius: 6px !important;
+    cursor: pointer !important;
+}
+
+div[role="dialog"] ::-webkit-scrollbar-thumb:hover {
+    background: #FFD000 !important;
+}
+
+/* Fix inner non-scrolling overflow container trapping wheel events */
+div[role="dialog"] .w-full.bg-transparent.h-full.overflow-y-auto {
+    overflow-y: visible !important;
     height: auto !important;
 }
 
+div[role="dialog"] .flex.w-full.h-full.overflow-auto.min-h-0 {
+    overflow-y: auto !important;
+    overscroll-behavior: contain !important;
+}
+
+/* ==========================================================================
+   Segmented Controls & Toggle Groups (Settings & Modals)
+   ========================================================================== */
+div[data-slot="toggle-group"],
+div[role="dialog"] div[role="group"]:has(> button[data-pressed]),
+div[role="dialog"] div[role="group"]:has(> button[aria-pressed]),
+div[role="dialog"] div.border.border-border:has(> button[data-pressed]),
+div[role="dialog"] div.border.border-border:has(> button[aria-pressed]) {
+    background-color: #F4EEDD !important; /* Retro comic cream track */
+    border: 2.5px solid #000000 !important;
+    box-shadow: 2.5px 2.5px 0px #000000 !important;
+    border-radius: 10px !important;
+    padding: 2px !important;
+    gap: 3px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    height: 32px !important;
+    box-sizing: border-box !important;
+}
+
 /* Individual Toggle Items */
-div[data-slot="toggle-group"] button {
+div[data-slot="toggle-group"] button,
+div[role="dialog"] div[role="group"]:has(> button[data-pressed]) button,
+div[role="dialog"] div[role="group"]:has(> button[aria-pressed]) button,
+div[role="dialog"] div.border.border-border:has(> button[data-pressed]) button,
+div[role="dialog"] div.border.border-border:has(> button[aria-pressed]) button {
     background-color: transparent !important;
-    border: 2px solid transparent !important;
+    border: 1.5px solid transparent !important;
     box-shadow: none !important;
     outline: none !important;
-    border-radius: 8px !important;
-    color: #000000 !important;
+    border-radius: 6px !important;
+    color: #444444 !important;
     font-family: 'Space Grotesk', -apple-system, sans-serif !important;
     font-weight: 700 !important;
-    font-size: 13px !important;
-    padding: 4px 12px !important;
-    height: 28px !important;
+    font-size: 12px !important;
+    padding: 2px 10px !important;
+    height: 24px !important;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -1333,7 +1389,8 @@ div[data-slot="toggle-group"] button {
     text-decoration: none !important;
 }
 
-div[data-slot="toggle-group"] button:hover:not([data-pressed]):not([aria-pressed="true"]):not([data-state="on"]) {
+div[data-slot="toggle-group"] button:hover:not([data-pressed]):not([aria-pressed="true"]):not([data-state="on"]),
+div[role="dialog"] div[role="group"] button:hover:not([data-pressed]):not([aria-pressed="true"]) {
     background-color: rgba(0, 0, 0, 0.08) !important;
     color: #000000 !important;
 }
@@ -1341,18 +1398,25 @@ div[data-slot="toggle-group"] button:hover:not([data-pressed]):not([aria-pressed
 /* Active / Selected Toggle Item */
 div[data-slot="toggle-group"] button[data-pressed],
 div[data-slot="toggle-group"] button[aria-pressed="true"],
-div[data-slot="toggle-group"] button[data-state="on"] {
+div[data-slot="toggle-group"] button[data-state="on"],
+div[role="dialog"] div[role="group"] button[data-pressed],
+div[role="dialog"] div[role="group"] button[aria-pressed="true"],
+div[role="dialog"] div.border.border-border button[data-pressed],
+div[role="dialog"] div.border.border-border button[aria-pressed="true"] {
     background-color: #FFE600 !important; /* Electric comic yellow */
     color: #000000 !important;
     border: 2px solid #000000 !important;
-    box-shadow: 2px 2px 0px #000000 !important;
+    box-shadow: 1.5px 1.5px 0px #000000 !important;
     font-weight: 800 !important;
-    transform: translate(-1px, -1px) !important;
+    border-radius: 6px !important;
+    transform: translate(-0.5px, -0.5px) !important;
 }
 
 div[data-slot="toggle-group"] button[data-pressed] *,
 div[data-slot="toggle-group"] button[aria-pressed="true"] *,
-div[data-slot="toggle-group"] button[data-state="on"] * {
+div[data-slot="toggle-group"] button[data-state="on"] *,
+div[role="dialog"] div[role="group"] button[data-pressed] *,
+div[role="dialog"] div[role="group"] button[aria-pressed="true"] * {
     color: #000000 !important;
     fill: #000000 !important;
     stroke: #000000 !important;
@@ -1366,8 +1430,8 @@ button[role="switch"] {
     border: 2.5px solid #000000 !important;
     box-shadow: 2px 2px 0px #000000 !important;
     border-radius: 9999px !important;
-    width: 48px !important;
-    height: 26px !important;
+    width: 46px !important;
+    height: 24px !important;
     padding: 0 !important;
     position: relative !important;
     display: inline-flex !important;
@@ -1383,8 +1447,8 @@ button[role="switch"]:hover {
 
 button[role="switch"] span {
     display: inline-block !important;
-    width: 16px !important;
-    height: 16px !important;
+    width: 15px !important;
+    height: 15px !important;
     border-radius: 9999px !important;
     background-color: #000000 !important; /* Solid black thumb when OFF */
     border: 1.5px solid #000000 !important;
@@ -1404,12 +1468,37 @@ button[role="switch"][aria-checked="true"] span {
     box-shadow: 1.5px 1.5px 0px #000000 !important;
 }
 
+/* Range & Volume Sliders */
+div[role="dialog"] input[type="range"],
+input[type="range"] {
+    background: #FFFFFF !important;
+    border: 2px solid #000000 !important;
+    box-shadow: 1.5px 1.5px 0px #000000 !important;
+    height: 8px !important;
+    border-radius: 9999px !important;
+    accent-color: #FFE600 !important;
+    outline: none !important;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    width: 16px !important;
+    height: 16px !important;
+    background: #FFE600 !important;
+    border: 2px solid #000000 !important;
+    box-shadow: 1.5px 1.5px 0px #000000 !important;
+    border-radius: 9999px !important;
+    cursor: pointer !important;
+}
+
 /* ==========================================================================
    Overview Panel & Section Headers & Badges
    ========================================================================== */
 div[data-testid="overview-panel-host-gutter"],
 .animate-overview-panel,
-div[role="dialog"][aria-label="Overview"] {
+div[role="dialog"][aria-label="Overview"],
+div[data-radix-popper-content-wrapper]:has([role="dialog"]) {
     background-color: #FFFFFF !important;
     border: 3.5px solid #000000 !important;
     box-shadow: 6px 6px 0px #000000 !important;
@@ -1421,7 +1510,8 @@ div[role="dialog"][aria-label="Overview"] {
 div[data-testid="overview-panel"] span.text-xs.opacity-50,
 div[data-testid="overview-panel"] button:has(span.agy-hover-label) span,
 div[data-testid="overview-panel-host-gutter"] span.text-xs.opacity-50,
-.animate-overview-panel span.agy-hover-label {
+.animate-overview-panel span.agy-hover-label,
+div:has(> [class*="pill"]) > span.text-xs {
     opacity: 1 !important;
     color: #000000 !important;
     font-weight: 800 !important;
@@ -1433,7 +1523,9 @@ div[data-testid="overview-panel-host-gutter"] span.text-xs.opacity-50,
 div[data-testid="overview-panel"] span.bg-border.rounded-full,
 div[data-testid="overview-panel-host-gutter"] span.bg-border.rounded-full,
 .animate-overview-panel span.bg-border.rounded-full,
-span.text-\[10px\].bg-border.rounded-full {
+span.text-\[10px\].bg-border.rounded-full,
+div:has(> span.text-xs) span.rounded-full.bg-muted,
+div.flex.items-center span.rounded-full:not([class*="h-4"]):not([class*="w-4"]) {
     background-color: #FFE600 !important;
     color: #000000 !important;
     border: 1.5px solid #000000 !important;
@@ -1441,8 +1533,8 @@ span.text-\[10px\].bg-border.rounded-full {
     opacity: 1 !important;
     font-weight: 900 !important;
     font-size: 11px !important;
-    padding: 1.5px 6px !important;
-    line-height: 1 !important;
+    padding: 1px 6px !important;
+    line-height: 1.2 !important;
     border-radius: 9999px !important;
     display: inline-flex !important;
     align-items: center !important;
@@ -1485,6 +1577,185 @@ div[role="dialog"] button:has(svg.lucide-x):hover {
     color: #FFFFFF !important;
     transform: translate(1px, 1px) !important;
     box-shadow: 1px 1px 0px #000000 !important;
+}
+
+/* ==========================================================================
+   Project Folders & Customizations Token Budget View
+   ========================================================================== */
+
+/* Outer Folders Card Container */
+div[role="dialog"] div.agy-card:has(button[data-testid="project-add-folder-button"]) {
+    background-color: #FFFFFF !important;
+    border: 3px solid #000000 !important;
+    border-radius: 14px !important;
+    box-shadow: 4px 4px 0px #000000 !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    margin: 8px 0 !important;
+}
+
+/* Ensure inner button wrapper doesn't render duplicate card borders */
+div[role="dialog"] div.flex.w-full:has(button[data-testid="project-add-folder-button"]) {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Individual Folder Row inside Folders Card */
+div[role="dialog"] div.agy-card:has(button[data-testid="project-add-folder-button"]) > div:first-child {
+    padding: 12px 16px !important;
+    border-bottom: 2px solid #000000 !important;
+    font-weight: 700 !important;
+    color: #000000 !important;
+}
+
+/* Add Folder Button - Neubrutalist Tactile Action */
+button[data-testid="project-add-folder-button"] {
+    background-color: #FFE600 !important;
+    color: #000000 !important;
+    border: 2px solid #000000 !important;
+    border-radius: 8px !important;
+    box-shadow: 2.5px 2.5px 0px #000000 !important;
+    margin: 10px 14px 14px 14px !important;
+    width: calc(100% - 28px) !important;
+    height: 38px !important;
+    font-family: 'Space Grotesk', -apple-system, sans-serif !important;
+    font-weight: 800 !important;
+    font-size: 13px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    cursor: pointer !important;
+    transition: all 0.1s ease !important;
+}
+
+button[data-testid="project-add-folder-button"]:hover {
+    background-color: #FFF04D !important;
+    transform: translate(-1px, -1px) !important;
+    box-shadow: 3.5px 3.5px 0px #000000 !important;
+}
+
+button[data-testid="project-add-folder-button"]:active {
+    transform: translate(1.5px, 1.5px) !important;
+    box-shadow: 1px 1px 0px #000000 !important;
+}
+
+button[data-testid="project-add-folder-button"] * {
+    color: #000000 !important;
+    fill: #000000 !important;
+    stroke: #000000 !important;
+}
+
+/* Customizations Card Container */
+div[role="dialog"] div.agy-card:has(button:has-text("breakdown")) {
+    background-color: #FFFFFF !important;
+    border: 3px solid #000000 !important;
+    border-radius: 14px !important;
+    box-shadow: 4px 4px 0px #000000 !important;
+    padding: 16px !important;
+    margin: 8px 0 !important;
+    color: #000000 !important;
+}
+
+div[role="dialog"] div.agy-card:has(button:has-text("breakdown")) p.text-muted-foreground {
+    color: #222222 !important;
+    font-weight: 600 !important;
+    line-height: 1.4 !important;
+}
+
+/* Customizations Warning Alert Box */
+div[role="dialog"] div.flex.items-center:has(> svg):has-text("Customization token budget"),
+div[role="dialog"] div[class*="bg-secondary/40"]:has-text("Customization token budget") {
+    background-color: #FFF9D2 !important;
+    color: #000000 !important;
+    border: 2px solid #000000 !important;
+    border-radius: 8px !important;
+    box-shadow: 2.5px 2.5px 0px #000000 !important;
+    padding: 8px 12px !important;
+    font-weight: 700 !important;
+    font-family: 'Space Grotesk', -apple-system, sans-serif !important;
+}
+
+div[role="dialog"] div:has-text("Customization token budget") svg {
+    color: #000000 !important;
+    fill: #FFE600 !important;
+    stroke: #000000 !important;
+}
+
+/* Customizations Token Budget Progress Bars */
+div[role="dialog"] div.w-full.h-2.rounded-full.bg-muted,
+div[role="dialog"] div.rounded-full.bg-muted.overflow-hidden {
+    background-color: #FFFFFF !important;
+    border: 2px solid #000000 !important;
+    border-radius: 9999px !important;
+    box-shadow: 1.5px 1.5px 0px #000000 !important;
+    height: 14px !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+}
+
+div[role="dialog"] div.w-full.h-2.rounded-full.bg-muted > div.h-2,
+div[role="dialog"] div.rounded-full.bg-muted.overflow-hidden > div {
+    height: 100% !important;
+    border-right: 1.5px solid #000000 !important;
+}
+
+/* Category Legend Dots / Bullets */
+div[role="dialog"] div.w-2.h-2.rounded-full.shrink-0 {
+    width: 10px !important;
+    height: 10px !important;
+    border: 1.5px solid #000000 !important;
+    box-shadow: 1px 1px 0px #000000 !important;
+    border-radius: 9999px !important;
+}
+
+/* Category Legend Label Typography */
+div[role="dialog"] div.flex.items-center.justify-between.text-xs span.text-secondary-foreground {
+    color: #000000 !important;
+    font-weight: 800 !important;
+}
+
+div[role="dialog"] div.flex.items-center.justify-between.text-xs span.tabular-nums {
+    color: #222222 !important;
+    font-weight: 700 !important;
+}
+
+/* Breakdown Action Buttons */
+div[role="dialog"] button.text-link:has-text("breakdown"),
+div[role="dialog"] button.agy-button-sm:has-text("breakdown") {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+    border: 1.5px solid #000000 !important;
+    box-shadow: 2px 2px 0px #000000 !important;
+    border-radius: 6px !important;
+    padding: 2px 10px !important;
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    text-decoration: none !important;
+    height: 22px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    transition: all 0.1s ease !important;
+}
+
+div[role="dialog"] button.text-link:has-text("breakdown"):hover,
+div[role="dialog"] button.agy-button-sm:has-text("breakdown"):hover {
+    background-color: #FFE600 !important;
+    color: #000000 !important;
+    transform: translate(-0.5px, -0.5px) !important;
+    box-shadow: 2.5px 2.5px 0px #000000 !important;
+    text-decoration: none !important;
+}
+
+div[role="dialog"] button.text-link:has-text("breakdown"):active,
+div[role="dialog"] button.agy-button-sm:has-text("breakdown"):active {
+    transform: translate(1px, 1px) !important;
+    box-shadow: 0.5px 0.5px 0px #000000 !important;
 }
 
 /* ==========================================================================
@@ -2625,12 +2896,50 @@ textarea,
     touch-action: manipulation !important;
 }
 
-/* Smooth Scrollbar Track Pacing */
+/* ==========================================================================
+   Smooth Tactile Neubrutalist Scrollbars (Global & Modals)
+   ========================================================================== */
+* {
+    scrollbar-width: thin !important;
+    scrollbar-color: #FFE600 #F4EEDD !important;
+}
+
 ::-webkit-scrollbar {
-    width: 6px !important;
-    height: 6px !important;
+    width: 10px !important;
+    height: 10px !important;
+    display: block !important;
+}
+
+::-webkit-scrollbar-track {
+    background: #F4EEDD !important;
+    border-left: 2px solid #000000 !important;
 }
 
 ::-webkit-scrollbar-thumb {
-    border-radius: 9999px !important;
+    background: #FFE600 !important;
+    border: 2px solid #000000 !important;
+    border-radius: 6px !important;
+    cursor: pointer !important;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #FFD000 !important;
+}
+
+::-webkit-scrollbar-corner {
+    background: #F4EEDD !important;
+}
+
+/* Explicitly override overlay-scrollbars hiding rules */
+.overlay-scrollbars ::-webkit-scrollbar,
+.overlay-scrollbars :not(.md-table-scroll)::-webkit-scrollbar {
+    display: block !important;
+    width: 10px !important;
+    height: 10px !important;
+}
+
+.overlay-scrollbars,
+.overlay-scrollbars * {
+    scrollbar-width: thin !important;
+    scrollbar-color: #FFE600 #F4EEDD !important;
 }

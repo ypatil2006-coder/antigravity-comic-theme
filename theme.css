@@ -622,10 +622,13 @@ div[role="region"][aria-label="Queued messages"] {
     background-color: #FFFFFF !important;
     background: #FFFFFF !important;
     border: 3px solid #000000 !important;
-    box-shadow: 5px 5px 0px #000000 !important;
+    box-shadow: 4px 4px 0px #000000 !important;
     border-radius: 16px !important;
     padding: 12px 16px !important;
-    margin: 8px 16px 12px 16px !important;
+    margin: 8px 4px 12px 2px !important;
+    width: calc(100% - 8px) !important;
+    max-width: calc(100% - 8px) !important;
+    box-sizing: border-box !important;
     max-height: 320px !important;
     color: #000000 !important;
     opacity: 1 !important;
@@ -708,6 +711,8 @@ button[data-testid="queued-messages-expand-button"] svg {
     border-radius: 10px !important;
     padding: 8px 12px !important;
     margin-top: 8px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
     gap: 12px !important;
     transition: transform 0.08s ease, box-shadow 0.08s ease !important;
 }

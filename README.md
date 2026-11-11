@@ -3,9 +3,9 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Platform: Linux | macOS | Windows](https://img.shields.io/badge/Platform-Linux%20%7C%20macOS%20%7C%20Windows-blue)](https://github.com/ypatil2006-coder/antigravity-comic-theme)
 [![Contrast: AAA Certified](https://img.shields.io/badge/Contrast-AAA%20%3E21%3A1-success)](https://github.com/ypatil2006-coder/antigravity-comic-theme)
-[![Theme: MLH Comic Neubrutalism](https://img.shields.io/badge/Style-MLH%20Comic%20Neubrutalism-FFE600?labelColor=000000)](https://github.com/ypatil2006-coder/antigravity-comic-theme)
+[![Theme: Comic Neubrutalism](https://img.shields.io/badge/Style-Comic%20Neubrutalism-FFE600?labelColor=000000)](https://github.com/ypatil2006-coder/antigravity-comic-theme)
 
-> **The ultimate authentic MLH Hackathon Comic Neubrutalism theme for Google Antigravity.**
+> **The ultimate Comic Neubrutalism theme for Google Antigravity.**
 > Transform your Antigravity AI coding workspace into a high-octane, ultra-tactile retro comic book interface with hard ink drop shadows, halftone paper textures, electric comic yellow accents, and zero-distraction readability.
 
 ---
@@ -61,9 +61,9 @@ Tactile retro switches (cream/black when OFF, vibrant comic green when ON) and h
 
 ---
 
-## 💎 Design Philosophy: Authentic MLH Comic Neubrutalism
+## 💎 Design Philosophy: Comic Neubrutalism
 
-Inspired by iconic Major League Hacking (MLH) Hackathon art systems and vintage comic printing techniques:
+Built with authentic comic book printing aesthetics and modern neubrutalist principles:
 
 | Visual Element | Specification | Purpose |
 | :--- | :--- | :--- |

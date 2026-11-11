@@ -1,7 +1,7 @@
 {
   "name": "antigravity-comic-theme",
   "version": "1.0.0",
-  "description": "Authentic MLH Hackathon Comic Neubrutalism theme for Google Antigravity. One-click installer for Linux, macOS, and Windows.",
+  "description": "Authentic Comic Neubrutalism theme for Google Antigravity. One-click installer for Linux, macOS, and Windows.",
   "main": "install.py",
   "bin": {
     "antigravity-comic-theme": "install.py"

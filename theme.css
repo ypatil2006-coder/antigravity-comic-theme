@@ -1,7 +1,7 @@
 /* ==========================================================================
-   Antigravity 2.0 - Authentic MLH Hackathon Comic Neubrutalism Theme
+   Antigravity 2.0 - Authentic Comic Neubrutalism Theme
    ==========================================================================
-   Exact reproduction of PastureSentry MLH Hackathon Comic Book Art System:
+   Comic Book Neubrutalism Art System:
    - Ground: Retro Comic Book Paper Cream (#F4EEDD) with Halftone Dot Matrix
    - Agent Cards & Bubbles: Crisp White (#FFFFFF) with 3.5px Solid Black Borders
    - Shadows: Hard Tactile Neubrutalist Drop Shadows (4px 4px 0px #000, 6px 6px 0px #000)
@@ -16,7 +16,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Bungee&family=Space+Grotesk:wght@500;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
 
 :root, .dark, body {
-    /* --- Authentic MLH Hackathon Comic Palette --- */
+    /* --- Authentic Comic Palette --- */
     --comic-yellow: #FFE600 !important;
     --comic-yellow-hover: #FFD000 !important;
     --comic-red: #FF3B30 !important;
@@ -615,7 +615,7 @@ pre code {
 }
 
 /* ==========================================================================
-   QUEUED MESSAGES CARD (MLH COMIC NEUBRUTALISM REDESIGN)
+   QUEUED MESSAGES CARD (COMIC NEUBRUTALISM REDESIGN)
    ========================================================================== */
 [data-testid="queued-messages-card"],
 div[role="region"][aria-label="Queued messages"] {
@@ -1488,7 +1488,7 @@ div[role="dialog"] button:has(svg.lucide-x):hover {
 }
 
 /* ==========================================================================
-   10. SCROLLBARS (Authentic PastureSentry Style)
+   10. SCROLLBARS (Comic Neubrutalism Style)
    ========================================================================== */
 ::-webkit-scrollbar {
     width: 10px !important;
@@ -1723,7 +1723,7 @@ div[class*="popover-content"] {
 }
 
 /* ==========================================================================
-   TURN CARDS: ARTIFACT CARDS & FILE CHANGES DIFF CARDS (MLH COMIC THEME)
+   TURN CARDS: ARTIFACT CARDS & FILE CHANGES DIFF CARDS (COMIC THEME)
    ========================================================================== */
 
 /* Artifact Card Container */

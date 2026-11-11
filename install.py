@@ -11,8 +11,10 @@ import os
 import sys
 import glob
 import json
+import time
 import base64
 import socket
+import subprocess
 import urllib.request
 from pathlib import Path
 
@@ -28,10 +30,16 @@ def get_platform_info():
         return "Windows"
     return "Unknown"
 
+def get_user_home():
+    rh = os.environ.get("REAL_HOME")
+    if rh and Path(rh).exists():
+        return Path(rh)
+    return Path.home()
+
 def find_candidate_ports():
     ports = set()
     plat = get_platform_info()
-    home = Path.home()
+    home = get_user_home()
 
     candidates = [
         Path("/tmp/antigravity-cdp-port")
@@ -58,20 +66,29 @@ def find_candidate_ports():
             candidates.append(Path(localappdata) / "Antigravity-Profiles")
             candidates.append(Path(localappdata) / "Antigravity")
 
-    # Search for DevToolsActivePort files
-    for root in candidates:
-        if not root.exists():
+    # Scan standard ports first
+    for std_port in [41049, 41013, 44703, 34263, 36853, 38345, 42705]:
+        try:
+            req = urllib.request.Request(f"http://127.0.0.1:{std_port}/json")
+            with urllib.request.urlopen(req, timeout=0.3) as resp:
+                if resp.status == 200:
+                    ports.add(std_port)
+        except Exception:
+            pass
+
+    for base in candidates:
+        if not base.exists():
             continue
-        if root.is_file():
+        if base.is_file():
             try:
-                with open(root, "r", encoding="utf-8") as f:
+                with open(base, "r", encoding="utf-8") as f:
                     val = f.readline().strip()
                     if val.isdigit():
                         ports.add(int(val))
             except Exception:
                 pass
-        elif root.is_dir():
-            for p_file in root.glob("**/DevToolsActivePort"):
+        elif base.is_dir():
+            for p_file in base.glob("**/DevToolsActivePort"):
                 try:
                     with open(p_file, "r", encoding="utf-8") as f:
                         val = f.readline().strip()
@@ -138,12 +155,12 @@ def raw_ws_evaluate(host, port, path, js_expression):
     finally:
         s.close()
 
-def inject_theme(css_content):
+def inject_theme(css_content, verbose=True):
     ports = find_candidate_ports()
     if not ports:
-        print("[!] No active Antigravity CDP debug ports found.")
-        print("    If Antigravity is not running with remote debugging, launch it with:")
-        print("    --remote-debugging-port=0")
+        if verbose:
+            print("[!] No active Antigravity CDP debug ports found.")
+            print("    Theme files were saved to disk and will load on launch.")
         return False
 
     success_count = 0
@@ -154,7 +171,9 @@ def inject_theme(css_content):
             el.id = "antigravity-comic-theme-style";
             (document.head || document.documentElement).appendChild(el);
         }}
-        el.textContent = {json.dumps(css_content)};
+        if (el.textContent !== {json.dumps(css_content)}) {{
+            el.textContent = {json.dumps(css_content)};
+        }}
         return "Theme applied successfully!";
     }})()"""
 
@@ -169,16 +188,15 @@ def inject_theme(css_content):
         for target in targets:
             if target.get("type") != "page":
                 continue
-            path = target.get("devtoolsFrontendUrl", "").split("?")[-1]
-            ws_url = target.get("webSocketDebuggerUrl")
             ws_path = f"/devtools/page/{target['id']}"
 
             try:
                 raw_ws_evaluate("127.0.0.1", port, ws_path, js_snippet)
                 title = target.get("title", "Antigravity Window")
-                print(f"  ✓ Injected into '{title}' (Port {port})")
+                if verbose:
+                    print(f"  ✓ Injected into '{title}' (Port {port})")
                 success_count += 1
-            except Exception as e:
+            except Exception:
                 pass
 
     return success_count > 0
@@ -189,7 +207,7 @@ def persist_theme_profile(css_content):
     for persistent loading on boot.
     """
     plat = get_platform_info()
-    home = Path.home()
+    home = get_user_home()
     target_dirs = []
 
     if plat == "Linux":
@@ -215,7 +233,95 @@ def persist_theme_profile(css_content):
         except Exception:
             pass
 
+def setup_persistent_daemon():
+    """
+    Installs a lightweight OS background service so the theme automatically
+    re-applies on reboot, window reloads, and app restarts.
+    """
+    plat = get_platform_info()
+    home = get_user_home()
+    script_path = Path(__file__).resolve()
+
+    if plat == "Linux":
+        service_dir = home / ".config" / "systemd" / "user"
+        service_file = service_dir / "antigravity-comic-theme.service"
+        try:
+            service_dir.mkdir(parents=True, exist_ok=True)
+            content = f"""[Unit]
+Description=Antigravity Comic Neubrutalism Theme Auto-Sync
+After=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart={sys.executable} "{script_path}" --watch
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=default.target
+"""
+            with open(service_file, "w", encoding="utf-8") as f:
+                f.write(content)
+            subprocess.run(["systemctl", "--user", "daemon-reload"], capture_output=True)
+            subprocess.run(["systemctl", "--user", "enable", "--now", "antigravity-comic-theme.service"], capture_output=True)
+            print("  ✓ Installed persistent systemd user service: antigravity-comic-theme.service")
+        except Exception:
+            pass
+
+    elif plat == "macOS":
+        launch_dir = Path.home() / "Library" / "LaunchAgents"
+        plist_file = launch_dir / "com.antigravity.comic-theme.plist"
+        try:
+            launch_dir.mkdir(parents=True, exist_ok=True)
+            content = f"""<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.antigravity.comic-theme</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>{sys.executable}</string>
+        <string>{script_path}</string>
+        <string>--watch</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <true/>
+</dict>
+</plist>
+"""
+            with open(plist_file, "w", encoding="utf-8") as f:
+                f.write(content)
+            subprocess.run(["launchctl", "unload", str(plist_file)], capture_output=True)
+            subprocess.run(["launchctl", "load", str(plist_file)], capture_output=True)
+            print("  ✓ Installed persistent macOS LaunchAgent: com.antigravity.comic-theme.plist")
+        except Exception:
+            pass
+
+def run_watcher(css_content):
+    """
+    Watches for active Antigravity Electron instances and ensures the theme
+    is persistently applied whenever windows open or reload.
+    """
+    print("[*] Antigravity Theme Watcher started in background...")
+    while True:
+        try:
+            inject_theme(css_content, verbose=False)
+        except Exception:
+            pass
+        time.sleep(2.5)
+
 def main():
+    if "--watch" in sys.argv:
+        if not THEME_CSS_FILE.exists():
+            sys.exit(1)
+        with open(THEME_CSS_FILE, "r", encoding="utf-8") as f:
+            css = f.read()
+        run_watcher(css)
+        return
+
     print("=" * 64)
     print("  🎨 Antigravity Comic Neubrutalism Theme Installer")
     print(f"  Platform: {get_platform_info()} | Python: {sys.version.split()[0]}")
@@ -231,14 +337,17 @@ def main():
     print("[*] Persisting theme file to system configuration...")
     persist_theme_profile(css)
 
+    print("\n[*] Installing persistent background auto-sync...")
+    setup_persistent_daemon()
+
     print("\n[*] Hot-reloading theme into active Antigravity instances...")
-    ok = inject_theme(css)
+    ok = inject_theme(css, verbose=True)
 
     print("\n" + "=" * 64)
     if ok:
-        print("  🎉 SUCCESS: Comic Neubrutalism theme is active and live!")
+        print("  🎉 SUCCESS: Comic Neubrutalism theme is active, permanent & live!")
     else:
-        print("  ✓ Theme files installed. Launch Antigravity to enjoy the new theme!")
+        print("  ✓ Theme installed permanently. Launch Antigravity to enjoy the new theme!")
     print("=" * 64)
 
 if __name__ == "__main__":

@@ -1,0 +1,36 @@
+{
+  "name": "antigravity-comic-theme",
+  "version": "1.0.0",
+  "description": "Authentic MLH Hackathon Comic Neubrutalism theme for Google Antigravity. One-click installer for Linux, macOS, and Windows.",
+  "main": "install.py",
+  "bin": {
+    "antigravity-comic-theme": "install.py"
+  },
+  "scripts": {
+    "install-theme": "python3 install.py",
+    "test": "python3 install.py"
+  },
+  "keywords": [
+    "antigravity",
+    "antigravity-theme",
+    "antigravity-themes",
+    "google-antigravity",
+    "neubrutalism",
+    "comic-book",
+    "custom-theme",
+    "ui-theme",
+    "dark-mode",
+    "light-mode",
+    "electron-theme"
+  ],
+  "author": "Yash Patil <ypatil20066@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ypatil2006-coder/antigravity-comic-theme.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ypatil2006-coder/antigravity-comic-theme/issues"
+  },
+  "homepage": "https://github.com/ypatil2006-coder/antigravity-comic-theme#readme"
+}

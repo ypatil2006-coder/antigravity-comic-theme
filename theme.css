@@ -1629,16 +1629,25 @@ div.surface-glass:not([role="tooltip"]) {
     border: 3px solid #000000 !important;
     box-shadow: 6px 6px 0px #000000 !important;
     border-radius: 14px !important;
-    padding: 6px !important;
+    padding: 8px 6px !important;
+    min-width: 320px !important;
+    max-width: 440px !important;
     opacity: 1 !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
     z-index: 9999999 !important;
 }
 
+/* Model Selector & Dropdown Panels */
+[data-testid="model-selector-panel"] {
+    padding: 2px !important;
+    overflow: visible !important;
+}
+
 /* Menu items inside popups */
 [role="menuitem"],
 [role="option"],
+.agy-overlay-item,
 div.agy-overlay button,
 div.surface-glass button {
     color: #000000 !important;
@@ -1648,11 +1657,18 @@ div.surface-glass button {
     padding: 6px 10px !important;
     border-radius: 8px !important;
     border: 1.5px solid transparent !important;
+    width: calc(100% - 6px) !important;
+    margin: 2px 3px !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
     transition: all 0.08s ease !important;
 }
 
 [role="menuitem"] *,
 [role="option"] *,
+.agy-overlay-item *,
 div.agy-overlay button *,
 div.surface-glass button * {
     color: #000000 !important;
@@ -1663,13 +1679,28 @@ div.surface-glass button * {
 [role="menuitem"]:hover,
 [role="option"]:hover,
 [role="menuitem"][data-highlighted],
+.agy-overlay-item[data-highlighted],
+.agy-overlay-item:hover,
 div.agy-overlay button:hover,
 div.surface-glass button:hover {
     background-color: #FFE600 !important;
     color: #000000 !important;
-    border: 1.5px solid #000000 !important;
+    border: 2px solid #000000 !important;
     box-shadow: 2px 2px 0px #000000 !important;
-    transform: translate(1px, 1px) !important;
+    transform: none !important;
+}
+
+/* Notice & Unavailable Model Badges */
+.agy-overlay-item div.rounded-full,
+[role="menuitem"] div.rounded-full {
+    opacity: 1 !important;
+    border: 1.5px solid #000000 !important;
+    background-color: #FFE600 !important;
+    color: #000000 !important;
+    font-weight: 800 !important;
+    padding: 2px 7px !important;
+    margin-left: auto !important;
+    flex-shrink: 0 !important;
 }
 
 /* Popover Content (e.g. Radix Popovers, Context Pickers) */

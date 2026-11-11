@@ -110,6 +110,25 @@ antigravity-comic-theme/
 
 ---
 
+## 🔍 FAQ & Search: Google Antigravity Themes
+
+### What are Antigravity Themes?
+**Antigravity Themes** allow developers to customize the visual appearance, color palette, contrast levels, and typographic hierarchy of the Google Antigravity AI coding workspace. This Comic Neubrutalism theme replaces the default interface with an authentic retro comic book aesthetic with high-contrast AAA legibility.
+
+### How do I install custom themes in Antigravity?
+You can install this theme in a single command on any operating system:
+- **Linux & macOS:** Run `curl -fsSL https://raw.githubusercontent.com/ypatil2006-coder/antigravity-comic-theme/main/install.sh | bash`
+- **Windows:** Run `irm https://raw.githubusercontent.com/ypatil2006-coder/antigravity-comic-theme/main/install.ps1 | iex`
+- **Python / Terminal:** Run `python3 install.py`
+
+### Does installing a theme require restarting Antigravity?
+No. The installer connects to running Antigravity instances via the Chrome DevTools Protocol (CDP) to hot-reload the stylesheet live into active windows with **zero restart or downtime**.
+
+### How do I revert to the default Antigravity theme?
+Press `Ctrl+Shift+R` (`Cmd+Shift+R` on macOS) inside Antigravity, or delete `antigravity-comic-theme.css` from your local profile directory (`~/.config/Antigravity/themes`).
+
+---
+
 ## 🤝 Contributing
 
 Contributions, issues, and feature requests are welcome!

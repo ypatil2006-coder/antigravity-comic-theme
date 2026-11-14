@@ -1298,50 +1298,70 @@ div[role="dialog"] nav button.bg-sidebar-secondary,
 }
 
 /* Settings Modal Scrollbar & Scroll Container Fix */
-div[role="dialog"] * {
+div[role="dialog"] *,
+.settings-modal-container * {
     overscroll-behavior: auto !important;
+    overscroll-behavior-y: auto !important;
+    contain: none !important;
 }
 
 div[role="dialog"] .overflow-auto,
-div[role="dialog"] .overflow-y-auto {
+div[role="dialog"] .overflow-y-auto,
+.settings-modal-container .overflow-auto,
+.settings-modal-container .overflow-y-auto {
     scrollbar-width: thin !important;
     scrollbar-color: #FFE600 #F4EEDD !important;
     overscroll-behavior: auto !important;
+    overscroll-behavior-y: auto !important;
 }
 
 div[role="dialog"] ::-webkit-scrollbar,
 div[role="dialog"] .overflow-auto::-webkit-scrollbar,
-div[role="dialog"] .overflow-y-auto::-webkit-scrollbar {
+div[role="dialog"] .overflow-y-auto::-webkit-scrollbar,
+.settings-modal-container ::-webkit-scrollbar,
+.settings-modal-container .overflow-auto::-webkit-scrollbar,
+.settings-modal-container .overflow-y-auto::-webkit-scrollbar {
     display: block !important;
     width: 10px !important;
     height: 10px !important;
 }
 
-div[role="dialog"] ::-webkit-scrollbar-track {
+div[role="dialog"] ::-webkit-scrollbar-track,
+.settings-modal-container ::-webkit-scrollbar-track {
     background: #F4EEDD !important;
     border-left: 2px solid #000000 !important;
 }
 
-div[role="dialog"] ::-webkit-scrollbar-thumb {
+div[role="dialog"] ::-webkit-scrollbar-thumb,
+.settings-modal-container ::-webkit-scrollbar-thumb {
     background: #FFE600 !important;
     border: 2px solid #000000 !important;
     border-radius: 6px !important;
     cursor: pointer !important;
 }
 
-div[role="dialog"] ::-webkit-scrollbar-thumb:hover {
+div[role="dialog"] ::-webkit-scrollbar-thumb:hover,
+.settings-modal-container ::-webkit-scrollbar-thumb:hover {
     background: #FFD000 !important;
 }
 
 /* Fix inner non-scrolling overflow container trapping wheel events */
-div[role="dialog"] .w-full.bg-transparent.h-full.overflow-y-auto {
+div[role="dialog"] .w-full.bg-transparent.h-full.overflow-y-auto,
+.settings-modal-container .w-full.bg-transparent.h-full.overflow-y-auto,
+div[role="dialog"] .overflow-y-auto:not(.flex.w-full.h-full.overflow-auto),
+.settings-modal-container .overflow-y-auto:not(.flex.w-full.h-full.overflow-auto) {
     overflow-y: visible !important;
     height: auto !important;
+    contain: none !important;
+    overscroll-behavior: auto !important;
+    overscroll-behavior-y: auto !important;
 }
 
-div[role="dialog"] .flex.w-full.h-full.overflow-auto.min-h-0 {
-    overflow-y: auto !important;
+div[role="dialog"] .flex.w-full.h-full.overflow-auto.min-h-0,
+.settings-modal-container .flex.w-full.h-full.overflow-auto.min-h-0 {
+    overflow-y: scroll !important;
     overscroll-behavior: contain !important;
+    overscroll-behavior-y: contain !important;
 }
 
 /* ==========================================================================
@@ -2847,8 +2867,7 @@ button.review-button * {
 [data-testid="autoscroll-viewport"],
 [data-testid="conversation-list-sidebar"],
 #antigravity-skills-drawer .ag-drawer-content,
-div.bg-sidebar .overflow-y-auto,
-.overflow-y-auto {
+div.bg-sidebar .overflow-y-auto {
     scroll-behavior: smooth !important;
     overscroll-behavior-y: contain !important;
     will-change: scroll-position !important;

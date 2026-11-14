@@ -593,25 +593,150 @@ code:not(pre code) {
     vertical-align: baseline !important;
 }
 
-/* Code blocks (Terminal Output) */
+/* ==========================================================================
+   CODE BLOCKS & TERMINAL OUTPUT (Crisp Studio Neubrutalism)
+   ========================================================================== */
 pre {
-    background-color: #141414 !important;
-    border: 3.5px solid #000000 !important;
-    box-shadow: 5px 5px 0px #000000 !important;
-    border-radius: 12px !important;
+    background-color: #FFFFFF !important;
+    background: #FFFFFF !important;
+    border: 2.5px solid #000000 !important;
+    box-shadow: 4px 4px 0px #000000 !important;
+    border-radius: 10px !important;
     padding: 14px 18px !important;
-    margin: 14px 0 !important;
-    color: #00D26A !important;
-    font-family: 'Space Mono', monospace !important;
+    margin: 12px 0 !important;
+    color: #111111 !important;
+    font-family: 'Space Mono', 'JetBrains Mono', monospace !important;
+    font-size: 13px !important;
+    line-height: 1.55 !important;
 }
 
 pre code {
     background: transparent !important;
-    color: #00D26A !important;
-    font-family: 'Space Mono', monospace !important;
+    color: #111111 !important;
+    font-family: 'Space Mono', 'JetBrains Mono', monospace !important;
     font-size: 13px !important;
     border: none !important;
     padding: 0 !important;
+}
+
+/* Terminal Card Container */
+.group\/terminal-card,
+div[class*="terminal-card"] {
+    background-color: #FFFFFF !important;
+    background: #FFFFFF !important;
+    border: 2.5px solid #000000 !important;
+    box-shadow: 4px 4px 0px #000000 !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
+    margin: 10px 0 !important;
+}
+
+/* Terminal Card Header */
+.group\/terminal-card > div:first-child,
+div[class*="terminal-card"] > div:first-child {
+    background-color: #FAF4E6 !important;
+    border-bottom: 2px solid #000000 !important;
+    padding: 8px 12px !important;
+    color: #000000 !important;
+    font-family: 'Space Mono', monospace !important;
+    font-weight: 700 !important;
+}
+
+.group\/terminal-card > div:first-child span,
+div[class*="terminal-card"] > div:first-child span {
+    color: #000000 !important;
+}
+
+.group\/terminal-card > div:first-child span.text-muted-foreground,
+div[class*="terminal-card"] > div:first-child span.text-muted-foreground {
+    color: #777777 !important;
+    font-weight: 700 !important;
+}
+
+/* Terminal Inside pre */
+.group\/terminal-card pre,
+div[class*="terminal-card"] pre {
+    background-color: #FFFFFF !important;
+    background: #FFFFFF !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    padding: 12px 14px !important;
+    color: #111111 !important;
+}
+
+/* Eliminate murky transparent gradient masks in tool cards & terminal outputs */
+div[class*="terminal-card"] [class*="overflow-y-auto"],
+div[class*="terminal-card"] pre,
+div.bleed-contain[class*="overflow-y-auto"],
+div[class*="overflow-y-auto"]:has(> pre),
+button[data-testid="tool-group-collapsible"] + div [class*="overflow-y-auto"] {
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+}
+
+/* Syntax Highlighting for Light Neubrutalism */
+pre .token.keyword,
+pre .token.selector,
+pre .token.important {
+    color: #0048BA !important;
+    font-weight: 700 !important;
+}
+
+pre .token.string,
+pre .token.char,
+pre .token.attr-value {
+    color: #C41C00 !important;
+}
+
+pre .token.function,
+pre .token.class-name {
+    color: #7928CA !important;
+    font-weight: 700 !important;
+}
+
+pre .token.number,
+pre .token.boolean {
+    color: #B45309 !important;
+    font-weight: 700 !important;
+}
+
+pre .token.property,
+pre .token.variable,
+pre .token.parameter {
+    color: #0F172A !important;
+}
+
+pre .token.comment {
+    color: #64748B !important;
+    font-style: italic !important;
+}
+
+pre .token.punctuation,
+pre .token.operator {
+    color: #000000 !important;
+    font-weight: 600 !important;
+}
+
+/* Tool Group Collapsible Pill ("Thought for 9s", "Ran ...") */
+button[data-testid="tool-group-collapsible"] {
+    background-color: #FFFFFF !important;
+    border: 2px solid #000000 !important;
+    box-shadow: 2.5px 2.5px 0px #000000 !important;
+    border-radius: 8px !important;
+    padding: 6px 12px !important;
+    color: #000000 !important;
+    font-family: 'Space Grotesk', -apple-system, sans-serif !important;
+    font-weight: 700 !important;
+    margin: 4px 0 !important;
+    transition: all 0.08s ease !important;
+}
+
+button[data-testid="tool-group-collapsible"]:hover {
+    background-color: #FFE600 !important;
+    transform: translate(-1px, -1px) !important;
+    box-shadow: 3.5px 3.5px 0px #000000 !important;
 }
 
 /* ==========================================================================

@@ -1,36 +1,61 @@
 /* ==========================================================================
-   Antigravity 2.0 - Authentic Comic Neubrutalism Theme
+   Antigravity 2.0 - Authentic Comic Neubrutalism Dual-Mode Art System
    ==========================================================================
-   Comic Book Neubrutalism Art System:
-   - Ground: Retro Comic Book Paper Cream (#F4EEDD) with Halftone Dot Matrix
-   - Agent Cards & Bubbles: Crisp White (#FFFFFF) with 3.5px Solid Black Borders
+   Comic Book Neubrutalism Design Architecture:
+   - Light Mode: Retro Comic Book Paper Cream (#F4EEDD) + Crisp Studio White (#FFFFFF) + Jet Black (#000000)
+   - Dark Mode: Obsidian Comic Slate (#121216) + Dark Charcoal Panels (#1E1E28) + Pure White (#FFFFFF)
+   - Accents: Electric Comic Yellow (#FFE600), Action Red (#FF3B30 / #FF5555), Neo Mint (#00D26A / #34D399)
    - Shadows: Hard Tactile Neubrutalist Drop Shadows (4px 4px 0px #000, 6px 6px 0px #000)
-   - Typography: 100% Solid Jet Black (#000000) for Ultra-Crisp >21:1 Contrast
-   - Accents: Electric Comic Yellow (#FFE600), Action Red (#FF3B30), Mint Green (#00D26A)
-   - Navigation: High-Contrast Comic Yellow Active States across Sidebar, Tabs, Modals
-   - Tooltips & Popovers: High-Contrast Electric Comic Yellow & White Badges
-   - Composer: Single Clean Comic Box, 8px Spacing on [+] & Model, Yellow Voice Mode Pill
-   - Eliminates Faux Titlebars, Universal Close Traps & Unreadable Dark Glass Popups
+   - Typography: Space Grotesk + Bungee + Space Mono with WCAG AAA Contrast (>18:1)
+   - Universal Reactive Theme Switcher (System / Light / Dark) in Settings -> Appearance
    ========================================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Bungee&family=Space+Grotesk:wght@500;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
 
-:root, .dark, body {
-    /* --- Authentic Comic Palette --- */
+/* --- SHARED COMIC DESIGN SYSTEM CONSTANTS --- */
+:root {
     --comic-yellow: #FFE600 !important;
     --comic-yellow-hover: #FFD000 !important;
+    --comic-black: #000000 !important;
+    --comic-white: #FFFFFF !important;
+
+    /* Font Stacks */
+    --font-comic: 'Bungee', 'Impact', sans-serif !important;
+    --font-display: 'Space Grotesk', -apple-system, sans-serif !important;
+    --font-mono: 'Space Mono', 'JetBrains Mono', monospace !important;
+    --font-sans: 'Space Grotesk', -apple-system, sans-serif !important;
+}
+
+/* ==========================================================================
+   LIGHT MODE TOKENS: RETRO COMIC PAPER CREAM
+   ========================================================================== */
+:root,
+body:not(.dark):not(.theme-dark),
+body.theme-light {
+    --comic-ground: #F4EEDD !important;
+    --comic-ground-dot: #000000 !important;
+    --comic-ground-dot-opacity: 0.12 !important;
+    --comic-surface: #FFFFFF !important;
+    --comic-surface-subtle: #FAF4E6 !important;
+    --comic-surface-alt: #F8F5EC !important;
+    --comic-surface-header: #EBE5D5 !important;
+    --comic-sidebar: #EBE5D5 !important;
+    --comic-border: #000000 !important;
+    --comic-border-subtle: #E2DEC9 !important;
+    --comic-shadow: #000000 !important;
+    --comic-text: #000000 !important;
+    --comic-text-muted: #444444 !important;
+    --comic-text-subtle: #666666 !important;
+    --comic-code-bg: #FFFFFF !important;
+    --comic-code-header: #FAF4E6 !important;
+    --comic-code-text: #0F172A !important;
     --comic-red: #FF3B30 !important;
     --comic-red-dark: #D90429 !important;
     --comic-green: #00D26A !important;
     --comic-green-dark: #008037 !important;
     --comic-blue: #0055FF !important;
-    --comic-cream: #F4EEDD !important;
-    --comic-cream-dark: #EBE5D5 !important;
-    --comic-dark: #141414 !important;
-    --comic-black: #000000 !important;
-    --comic-card: #FFFFFF !important;
-    
-    /* Native App CSS Variable Overrides to Light Comic Neubrutalism */
+
+    /* Native App CSS Variable Overrides (Light) */
     --background: #F4EEDD !important;
     --foreground: #000000 !important;
     --card: #FFFFFF !important;
@@ -42,7 +67,7 @@
     --secondary: #FFE600 !important;
     --secondary-foreground: #000000 !important;
     --muted: #E2DEC9 !important;
-    --muted-foreground: #141414 !important;
+    --muted-foreground: #444444 !important;
     --accent: #FFE600 !important;
     --accent-foreground: #000000 !important;
     --destructive: #FF3B30 !important;
@@ -50,8 +75,7 @@
     --border: #000000 !important;
     --input: #F4EEDD !important;
     --ring: #000000 !important;
-    
-    /* Sidebar Variables: Secondary is active yellow, muted is subtle hover */
+
     --sidebar: #EBE5D5 !important;
     --sidebar-foreground: #000000 !important;
     --sidebar-primary: #FFE600 !important;
@@ -62,26 +86,86 @@
     --sidebar-accent-foreground: #000000 !important;
     --sidebar-border: #000000 !important;
     --sidebar-muted: rgba(255, 230, 0, 0.25) !important;
+}
 
-    /* Font Stacks */
-    --font-comic: 'Bungee', 'Impact', sans-serif !important;
-    --font-display: 'Space Grotesk', -apple-system, sans-serif !important;
-    --font-mono: 'Space Mono', 'JetBrains Mono', monospace !important;
-    --font-sans: 'Space Grotesk', -apple-system, sans-serif !important;
+/* ==========================================================================
+   DARK MODE TOKENS: OBSIDIAN COMIC SLATE
+   ========================================================================== */
+html:has(body.dark),
+html:has(body.dark-theme),
+html:has(body.theme-dark),
+html.dark,
+body.dark,
+body.dark-theme,
+body.theme-dark,
+.dark {
+    --comic-ground: #121216 !important;
+    --comic-ground-dot: #2A2A38 !important;
+    --comic-ground-dot-opacity: 0.65 !important;
+    --comic-surface: #1E1E28 !important;
+    --comic-surface-subtle: #252636 !important;
+    --comic-surface-alt: #181822 !important;
+    --comic-surface-header: #20202C !important;
+    --comic-sidebar: #181820 !important;
+    --comic-border: #000000 !important;
+    --comic-border-subtle: #2D2D3D !important;
+    --comic-shadow: #000000 !important;
+    --comic-text: #FFFFFF !important;
+    --comic-text-muted: #A0A5BA !important;
+    --comic-text-subtle: #82879E !important;
+    --comic-code-bg: #15161E !important;
+    --comic-code-header: #20212C !important;
+    --comic-code-text: #F1F5F9 !important;
+    --comic-red: #FF5555 !important;
+    --comic-red-dark: #FF3333 !important;
+    --comic-green: #34D399 !important;
+    --comic-green-dark: #10B981 !important;
+    --comic-blue: #38BDF8 !important;
+
+    /* Native App CSS Variable Overrides (Dark) */
+    --background: #121216 !important;
+    --foreground: #FFFFFF !important;
+    --card: #1E1E28 !important;
+    --card-foreground: #FFFFFF !important;
+    --popover: #1E1E28 !important;
+    --popover-foreground: #FFFFFF !important;
+    --primary: #FFE600 !important;
+    --primary-foreground: #000000 !important;
+    --secondary: #FFE600 !important;
+    --secondary-foreground: #000000 !important;
+    --muted: #242432 !important;
+    --muted-foreground: #A0A5BA !important;
+    --accent: #FFE600 !important;
+    --accent-foreground: #000000 !important;
+    --destructive: #FF5555 !important;
+    --destructive-foreground: #FFFFFF !important;
+    --border: #000000 !important;
+    --input: #181822 !important;
+    --ring: #FFE600 !important;
+
+    --sidebar: #181820 !important;
+    --sidebar-foreground: #FFFFFF !important;
+    --sidebar-primary: #FFE600 !important;
+    --sidebar-primary-foreground: #000000 !important;
+    --sidebar-secondary: #FFE600 !important;
+    --sidebar-secondary-foreground: #000000 !important;
+    --sidebar-accent: #FFE600 !important;
+    --sidebar-accent-foreground: #000000 !important;
+    --sidebar-border: #000000 !important;
+    --sidebar-muted: rgba(255, 230, 0, 0.15) !important;
 }
 
 * {
     box-sizing: border-box !important;
     -webkit-font-smoothing: antialiased !important;
 }
-
 /* ==========================================================================
    1. MASTER ROOT WINDOW & GROUND (Comic Cream Paper + Halftone Dots)
    ========================================================================== */
 html,
 body {
-    background-color: #F4EEDD !important;
-    background-image: radial-gradient(#000000 12%, transparent 13%) !important;
+    background-color: var(--comic-ground) !important;
+    background-image: radial-gradient(var(--comic-ground-dot) 12%, transparent 13%) !important;
     background-size: 16px 16px !important;
     overflow: clip !important;
     overflow-x: clip !important;
@@ -92,18 +176,66 @@ body {
     margin: 0 !important;
     padding: 0 !important;
     overscroll-behavior: none !important;
-    color: #000000 !important;
-    font-family: 'Space Grotesk', -apple-system, sans-serif !important;
+    color: var(--comic-text) !important;
+    font-family: var(--font-sans) !important;
 }
 
 #root,
 div[class*="relative"][class*="w-screen"],
 div[class*="h-screen"][class*="w-screen"],
 .agy-shell {
-    background-color: #F4EEDD !important;
+    background-color: var(--comic-ground) !important;
     overflow: clip !important;
     overflow-x: clip !important;
-    color: #000000 !important;
+    color: var(--comic-text) !important;
+}
+
+
+/* ==========================================================================
+   Universal Tailwind & Component Utility Harmonization
+   ========================================================================== */
+.bg-background,
+div[class*="bg-background"] {
+    background-color: var(--comic-ground) !important;
+    color: var(--comic-text) !important;
+}
+
+.bg-sidebar,
+div[class*="bg-sidebar"] {
+    background-color: var(--comic-sidebar) !important;
+    color: var(--comic-text) !important;
+}
+
+.bg-card,
+.bg-popover {
+    background-color: var(--comic-surface) !important;
+    color: var(--comic-text) !important;
+}
+
+.text-foreground {
+    color: var(--comic-text) !important;
+}
+
+.text-muted-foreground {
+    color: var(--comic-text-muted) !important;
+}
+
+/* Customizations, Automations, Projects screens in both modes */
+main,
+[data-screen],
+div:has(> [data-screen]),
+div.flex-1.flex.flex-col.overflow-hidden:has(h1) {
+    background-color: var(--comic-ground) !important;
+    color: var(--comic-text) !important;
+}
+
+/* Customization search bar & buttons */
+input[placeholder*="Search customizations"],
+input[placeholder*="Search"] {
+    background-color: var(--comic-surface) !important;
+    color: var(--comic-text) !important;
+    border: 2px solid var(--comic-border) !important;
+    box-shadow: 2px 2px 0px var(--comic-shadow) !important;
 }
 
 /* Eliminate Faux Titlebars & Universal Close Button Traps */
@@ -124,7 +256,7 @@ header,
 div.h-14.border-b,
 div[data-testid="app-header"],
 div.shrink-0:has(nav, [aria-label="Breadcrumb"]) {
-    background: #EBE5D5 !important;
+    background: var(--comic-surface-header) !important;
     border-bottom: 3.5px solid #000000 !important;
     box-shadow: 0 3px 0 #000000 !important;
     color: #000000 !important;
@@ -133,7 +265,7 @@ div.shrink-0:has(nav, [aria-label="Breadcrumb"]) {
 header *,
 div.h-14.border-b *,
 div.shrink-0:has(nav, [aria-label="Breadcrumb"]) * {
-    color: #000000 !important;
+    color: var(--comic-text) !important;
     font-weight: 800 !important;
 }
 
@@ -145,9 +277,9 @@ aside,
 div[data-testid="sidebar-split"] > div:first-child,
 div[class*="group/rail"],
 div[class*="sidebar-container"] {
-    background-color: #EBE5D5 !important;
+    background-color: var(--comic-sidebar) !important;
     border-right: 1.5px solid #000000 !important;
-    color: #000000 !important;
+    color: var(--comic-text) !important;
 }
 
 /* Remove leaked link underlines across all navigation, sidebars & buttons */
@@ -322,7 +454,7 @@ main,
 [data-testid="conversation-view"],
 [data-testid="autoscroll-viewport"],
 div.browser-hole-opaque {
-    background-color: #F4EEDD !important;
+    background-color: var(--comic-ground) !important;
     color: #000000 !important;
 }
 
@@ -366,7 +498,7 @@ div.leading-relaxed,
 [data-testid="message-content"] h1, [data-testid="message-content"] h2, [data-testid="message-content"] h3, [data-testid="message-content"] h4,
 article h1, article h2, article h3, article h4,
 .markdown h1, .markdown h2, .markdown h3, .markdown h4 {
-    color: #000000 !important;
+    color: var(--comic-text) !important;
     font-family: 'Space Grotesk', Impact, sans-serif !important;
     font-weight: 900 !important;
     letter-spacing: -0.02em !important;
@@ -422,8 +554,8 @@ div[data-testid="user-input-step"] {
 
 .agy-user-bubble,
 div[data-testid="user-message-bubble"] {
-    background-color: #FFFFFF !important;
-    color: #000000 !important;
+    background-color: var(--comic-surface) !important;
+    color: var(--comic-text) !important;
     border: 3.5px solid #000000 !important;
     border-radius: 18px !important;
     box-shadow: 5px 5px 0px #000000 !important;
@@ -438,7 +570,7 @@ div[data-testid="user-message-bubble"] {
 /* User Bubble Text styling */
 .agy-user-bubble *,
 div[data-testid="user-message-bubble"] * {
-    color: #000000 !important;
+    color: var(--comic-text) !important;
     font-family: 'Space Grotesk', -apple-system, sans-serif !important;
     font-size: 15px !important;
     font-weight: 700 !important;
@@ -469,7 +601,7 @@ div[data-testid="user-message-bubble"]::before {
     right: 27px !important;
     border-width: 10px 10px 0 0 !important;
     border-style: solid !important;
-    border-color: #FFFFFF transparent !important;
+    border-color: var(--comic-surface) transparent !important;
     display: block !important;
     width: 0 !important;
     z-index: 2 !important;
@@ -480,13 +612,13 @@ div[data-testid="user-message-bubble"]::before {
    ========================================================================== */
 /* Assistant message container */
 div[role="article"][aria-label="Agent response"] {
-    background-color: #FFFFFF !important;
+    background-color: var(--comic-surface) !important;
     border: 3.5px solid #000000 !important;
     border-radius: 18px !important;
     box-shadow: 6px 6px 0px #000000 !important;
     padding: 18px 22px !important;
     margin: 12px 0 24px 0 !important;
-    color: #000000 !important;
+    color: var(--comic-text) !important;
     position: relative !important;
 }
 
@@ -551,7 +683,7 @@ div[data-testid="agent-loading"] .animate-shimmer-text {
 /* "Worked for Xm" Collapsible Step Pill */
 [data-testid="worked-for-collapsible"],
 button:has([data-testid="worked-for-collapsible"]) {
-    background-color: #EBE5D5 !important;
+    background-color: var(--comic-sidebar) !important;
     border: 2px solid #000000 !important;
     box-shadow: 2px 2px 0px #000000 !important;
     border-radius: 8px !important;
@@ -622,8 +754,8 @@ pre code {
 /* Terminal Card Container */
 .group\/terminal-card,
 div[class*="terminal-card"] {
-    background-color: #FFFFFF !important;
-    background: #FFFFFF !important;
+    background-color: var(--comic-code-bg) !important;
+    background: var(--comic-code-bg) !important;
     border: 2.5px solid #000000 !important;
     box-shadow: 4px 4px 0px #000000 !important;
     border-radius: 10px !important;
@@ -634,7 +766,7 @@ div[class*="terminal-card"] {
 /* Terminal Card Header */
 .group\/terminal-card > div:first-child,
 div[class*="terminal-card"] > div:first-child {
-    background-color: #FAF4E6 !important;
+    background-color: var(--comic-surface-subtle) !important;
     border-bottom: 2px solid #000000 !important;
     padding: 8px 12px !important;
     color: #000000 !important;
@@ -656,8 +788,8 @@ div[class*="terminal-card"] > div:first-child span.text-muted-foreground {
 /* Terminal Inside pre */
 .group\/terminal-card pre,
 div[class*="terminal-card"] pre {
-    background-color: #FFFFFF !important;
-    background: #FFFFFF !important;
+    background-color: var(--comic-code-bg) !important;
+    background: var(--comic-code-bg) !important;
     border: none !important;
     box-shadow: none !important;
     border-radius: 0 !important;
@@ -830,7 +962,7 @@ button[data-testid="queued-messages-expand-button"] svg {
 
 /* Queued Message Item Row */
 [data-testid="queued-messages-card"] div.flex-row.items-center.justify-between {
-    background-color: #F8F5EC !important;
+    background-color: var(--comic-surface-alt) !important;
     border: 2px solid #000000 !important;
     box-shadow: 2.5px 2.5px 0px #000000 !important;
     border-radius: 10px !important;
@@ -954,7 +1086,7 @@ div[data-testid="agent-input-box"] {
 
 /* Single clean elevated Neubrutalist composer container */
 div.surface-composer {
-    background-color: #FFFFFF !important;
+    background-color: var(--comic-surface) !important;
     border: 3.5px solid #000000 !important;
     box-shadow: 6px 6px 0px #000000 !important;
     border-radius: 20px !important;
@@ -964,7 +1096,7 @@ div.surface-composer {
 }
 
 div.surface-composer-card {
-    background-color: #FFFFFF !important;
+    background-color: var(--comic-surface) !important;
     border: none !important;
     box-shadow: none !important;
     padding: 8px 12px !important;
@@ -987,7 +1119,7 @@ div[data-testid="input-attachment"] {
     border: 2px solid #000000 !important;
     border-radius: 8px !important;
     box-shadow: 2px 2px 0px #000000 !important;
-    background-color: #FFFFFF !important;
+    background-color: var(--comic-surface) !important;
     overflow: hidden !important;
 }
 
@@ -1014,7 +1146,7 @@ div[data-testid="input-attachment"] button[data-testid="input-attachment-remove"
 /* Inner input text area */
 textarea,
 div[contenteditable="true"] {
-    background-color: #F4EEDD !important;
+    background-color: var(--comic-ground) !important;
     border: 2px solid #000000 !important;
     border-radius: 12px !important;
     color: #000000 !important;
@@ -1218,7 +1350,7 @@ button[data-testid="voice-start-button"]:hover {
 div[data-side-panel-open="true"],
 div[data-aux-pane-open="true"],
 div[data-testid="aux-pane-split"] > div:last-child {
-    background-color: #F4EEDD !important;
+    background-color: var(--comic-ground) !important;
     border-left: 1.5px solid #000000 !important;
     color: #000000 !important;
 }
@@ -1226,7 +1358,7 @@ div[data-testid="aux-pane-split"] > div:last-child {
 /* Artifact Header Bar */
 div[data-side-panel-open="true"] header,
 div[data-aux-pane-open="true"] header {
-    background-color: #EBE5D5 !important;
+    background-color: var(--comic-sidebar) !important;
     border-bottom: 3.5px solid #000000 !important;
     color: #000000 !important;
     font-weight: 900 !important;
@@ -1330,7 +1462,7 @@ td {
 }
 
 tr:nth-child(even) td {
-    background-color: #FDFBF7 !important;
+    background-color: var(--comic-surface) !important;
 }
 
 /* Monaco Code Editor / Diff High Contrast */
@@ -1352,9 +1484,46 @@ tr:nth-child(even) td {
 /* ==========================================================================
    9. MODALS, SETTINGS & CUSTOMIZATION DIALOGS (With Active Tab Highlights)
    ========================================================================== */
+/* Dialog Panes & Sub-containers Architecture */
+div[role="dialog"] .bg-background,
+div[role="dialog"] div[class*="bg-background"],
+div[role="dialog"] [data-split-root="true"],
+div[role="dialog"] [data-split-root="true"] > div,
+div[role="dialog"] div.grow.w-full {
+    background-color: var(--comic-ground) !important;
+    color: var(--comic-text) !important;
+}
+
+div[role="dialog"] div[data-testid="settings-sidebar"] {
+    background-color: var(--comic-sidebar) !important;
+    border-right: 2.5px solid var(--comic-border) !important;
+}
+
+div[role="dialog"] h2,
+div[role="dialog"] h1,
+div[role="dialog"] h3 {
+    color: var(--comic-text) !important;
+    font-weight: 800 !important;
+}
+
+div[role="dialog"] .text-muted-foreground {
+    color: var(--comic-text-muted) !important;
+}
+
+div[role="dialog"] .agy-card {
+    background-color: var(--comic-surface) !important;
+    border: 2.5px solid var(--comic-border) !important;
+    box-shadow: 3.5px 3.5px 0px var(--comic-shadow) !important;
+    border-radius: 14px !important;
+}
+
+div[role="dialog"] .agy-card > div {
+    border-color: var(--comic-border-subtle) !important;
+}
+
 div[role="dialog"],
 div[data-testid="settings-modal"] {
-    background-color: #F4EEDD !important;
+    background-color: var(--comic-ground) !important;
     border: 4px solid #000000 !important;
     border-radius: 20px !important;
     box-shadow: 10px 10px 0px #000000 !important;
@@ -1362,6 +1531,13 @@ div[data-testid="settings-modal"] {
 }
 
 div[role="dialog"] * {
+    color: var(--comic-text) !important;
+}
+
+div[role="dialog"] button.bg-sidebar-secondary *,
+div[role="dialog"] [data-pressed] *,
+div[role="dialog"] [aria-pressed="true"] *,
+div[role="dialog"] .bg-primary * {
     color: #000000 !important;
 }
 
@@ -1435,7 +1611,7 @@ div[role="dialog"] .overflow-y-auto,
 .settings-modal-container .overflow-auto,
 .settings-modal-container .overflow-y-auto {
     scrollbar-width: thin !important;
-    scrollbar-color: #FFE600 #F4EEDD !important;
+    scrollbar-color: #FFE600 var(--comic-ground) !important;
     overscroll-behavior: auto !important;
     overscroll-behavior-y: auto !important;
 }
@@ -1453,7 +1629,7 @@ div[role="dialog"] .overflow-y-auto::-webkit-scrollbar,
 
 div[role="dialog"] ::-webkit-scrollbar-track,
 .settings-modal-container ::-webkit-scrollbar-track {
-    background: #F4EEDD !important;
+    background: var(--comic-ground) !important;
     border-left: 2px solid #000000 !important;
 }
 
@@ -1497,7 +1673,7 @@ div[role="dialog"] div[role="group"]:has(> button[data-pressed]),
 div[role="dialog"] div[role="group"]:has(> button[aria-pressed]),
 div[role="dialog"] div.border.border-border:has(> button[data-pressed]),
 div[role="dialog"] div.border.border-border:has(> button[aria-pressed]) {
-    background-color: #F4EEDD !important; /* Retro comic cream track */
+    background-color: var(--comic-ground) !important; /* Retro comic cream track */
     border: 2.5px solid #000000 !important;
     box-shadow: 2.5px 2.5px 0px #000000 !important;
     border-radius: 10px !important;
@@ -1567,6 +1743,98 @@ div[role="dialog"] div[role="group"] button[aria-pressed="true"] * {
     stroke: #000000 !important;
 }
 
+
+/* ==========================================================================
+   THEME SWITCHER IN SETTINGS -> APPEARANCE (NEUBRUTALISM ART SYSTEM)
+   ========================================================================== */
+div[role="dialog"] div[data-slot="toggle-group"]:has(button[aria-label="System"]),
+div[data-slot="toggle-group"]:has(button[aria-label="System"]) {
+    background-color: var(--comic-surface-subtle) !important;
+    border: 2.5px solid var(--comic-border) !important;
+    box-shadow: 3px 3px 0px var(--comic-shadow) !important;
+    border-radius: 12px !important;
+    padding: 3px 4px !important;
+    gap: 6px !important;
+    height: 38px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+}
+
+div[data-slot="toggle-group"] button[aria-label="System"]:not([data-pressed]):not([aria-pressed="true"]),
+div[data-slot="toggle-group"] button[aria-label="Light"]:not([data-pressed]):not([aria-pressed="true"]),
+div[data-slot="toggle-group"] button[aria-label="Dark"]:not([data-pressed]):not([aria-pressed="true"]) {
+    background-color: transparent !important;
+    border: 2px solid transparent !important;
+    border-radius: 8px !important;
+    color: var(--comic-text) !important;
+    font-family: var(--font-display) !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    height: 28px !important;
+    padding: 2px 12px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    cursor: pointer !important;
+    transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* System Button Label */
+div[data-slot="toggle-group"] button[aria-label="System"]::after {
+    content: "System";
+    font-weight: 800;
+    margin-left: 2px;
+}
+
+/* Light Button Label */
+div[data-slot="toggle-group"] button[aria-label="Light"]::after {
+    content: "Light";
+    font-weight: 800;
+    margin-left: 2px;
+}
+
+/* Dark Button Label */
+div[data-slot="toggle-group"] button[aria-label="Dark"]::after {
+    content: "Dark";
+    font-weight: 800;
+    margin-left: 2px;
+}
+
+/* Inactive Hover */
+div[data-slot="toggle-group"] button[aria-label="System"]:hover:not([data-pressed]):not([aria-pressed="true"]),
+div[data-slot="toggle-group"] button[aria-label="Light"]:hover:not([data-pressed]):not([aria-pressed="true"]),
+div[data-slot="toggle-group"] button[aria-label="Dark"]:hover:not([data-pressed]):not([aria-pressed="true"]) {
+    background-color: rgba(255, 230, 0, 0.25) !important;
+    color: var(--comic-text) !important;
+    border-color: var(--comic-border) !important;
+}
+
+/* Active Selected Mode (Always Electric Yellow with Jet Black text) */
+div[data-slot="toggle-group"] button[aria-label="System"][data-pressed],
+div[data-slot="toggle-group"] button[aria-label="System"][aria-pressed="true"],
+div[data-slot="toggle-group"] button[aria-label="Light"][data-pressed],
+div[data-slot="toggle-group"] button[aria-label="Light"][aria-pressed="true"],
+div[data-slot="toggle-group"] button[aria-label="Dark"][data-pressed],
+div[data-slot="toggle-group"] button[aria-label="Dark"][aria-pressed="true"] {
+    background-color: #FFE600 !important;
+    color: #000000 !important;
+    border: 2.5px solid #000000 !important;
+    box-shadow: 2px 2px 0px #000000 !important;
+    font-weight: 900 !important;
+    transform: translate(-1px, -1px) !important;
+}
+
+div[data-slot="toggle-group"] button[aria-label="System"][data-pressed] *,
+div[data-slot="toggle-group"] button[aria-label="System"][aria-pressed="true"] *,
+div[data-slot="toggle-group"] button[aria-label="Light"][data-pressed] *,
+div[data-slot="toggle-group"] button[aria-label="Light"][aria-pressed="true"] *,
+div[data-slot="toggle-group"] button[aria-label="Dark"][data-pressed] *,
+div[data-slot="toggle-group"] button[aria-label="Dark"][aria-pressed="true"] * {
+    color: #000000 !important;
+    fill: #000000 !important;
+    stroke: #000000 !important;
+}
+
 /* ==========================================================================
    Tactile Comic Toggle Switches
    ========================================================================== */
@@ -1616,7 +1884,7 @@ button[role="switch"][aria-checked="true"] span {
 /* Range & Volume Sliders */
 div[role="dialog"] input[type="range"],
 input[type="range"] {
-    background: #FFFFFF !important;
+    background: var(--comic-surface) !important;
     border: 2px solid #000000 !important;
     box-shadow: 1.5px 1.5px 0px #000000 !important;
     height: 8px !important;
@@ -1644,7 +1912,7 @@ div[data-testid="overview-panel-host-gutter"],
 .animate-overview-panel,
 div[role="dialog"][aria-label="Overview"],
 div[data-radix-popper-content-wrapper]:has([role="dialog"]) {
-    background-color: #FFFFFF !important;
+    background-color: var(--comic-surface) !important;
     border: 3.5px solid #000000 !important;
     box-shadow: 6px 6px 0px #000000 !important;
     border-radius: 16px !important;
@@ -1697,7 +1965,7 @@ div[data-testid="overview-panel-host-gutter"] div.border-b,
 /* Settings Cards inside Modal */
 div[role="dialog"] div.border.rounded-lg,
 div[role="dialog"] div[class*="card"] {
-    background-color: #FFFFFF !important;
+    background-color: var(--comic-surface) !important;
     border: 3px solid #000000 !important;
     border-radius: 14px !important;
     box-shadow: 4px 4px 0px #000000 !important;
@@ -1708,7 +1976,7 @@ div[role="dialog"] div[class*="card"] {
 /* Modal Close Button */
 div[role="dialog"] button[aria-label*="close" i],
 div[role="dialog"] button:has(svg.lucide-x) {
-    background-color: #FFFFFF !important;
+    background-color: var(--comic-surface) !important;
     color: #000000 !important;
     border: 2.5px solid #000000 !important;
     border-radius: 8px !important;
@@ -1730,7 +1998,7 @@ div[role="dialog"] button:has(svg.lucide-x):hover {
 
 /* Outer Folders Card Container */
 div[role="dialog"] div.agy-card:has(button[data-testid="project-add-folder-button"]) {
-    background-color: #FFFFFF !important;
+    background-color: var(--comic-surface) !important;
     border: 3px solid #000000 !important;
     border-radius: 14px !important;
     box-shadow: 4px 4px 0px #000000 !important;
@@ -1796,7 +2064,7 @@ button[data-testid="project-add-folder-button"] * {
 
 /* Customizations Card Container */
 div[role="dialog"] div.agy-card:has(button:has-text("breakdown")) {
-    background-color: #FFFFFF !important;
+    background-color: var(--comic-surface) !important;
     border: 3px solid #000000 !important;
     border-radius: 14px !important;
     box-shadow: 4px 4px 0px #000000 !important;
@@ -1833,7 +2101,7 @@ div[role="dialog"] div:has-text("Customization token budget") svg {
 /* Customizations Token Budget Progress Bars */
 div[role="dialog"] div.w-full.h-2.rounded-full.bg-muted,
 div[role="dialog"] div.rounded-full.bg-muted.overflow-hidden {
-    background-color: #FFFFFF !important;
+    background-color: var(--comic-surface) !important;
     border: 2px solid #000000 !important;
     border-radius: 9999px !important;
     box-shadow: 1.5px 1.5px 0px #000000 !important;
@@ -1871,7 +2139,7 @@ div[role="dialog"] div.flex.items-center.justify-between.text-xs span.tabular-nu
 /* Breakdown Action Buttons */
 div[role="dialog"] button.text-link:has-text("breakdown"),
 div[role="dialog"] button.agy-button-sm:has-text("breakdown") {
-    background-color: #FFFFFF !important;
+    background-color: var(--comic-surface) !important;
     color: #000000 !important;
     border: 1.5px solid #000000 !important;
     box-shadow: 2px 2px 0px #000000 !important;
@@ -1912,7 +2180,7 @@ div[role="dialog"] button.agy-button-sm:has-text("breakdown"):active {
 }
 
 ::-webkit-scrollbar-track {
-    background: #F4EEDD !important;
+    background: var(--comic-ground) !important;
     border-left: 2px solid #000000 !important;
 }
 
@@ -2039,8 +2307,8 @@ div.bottom-full[role="listbox"] [role="option"]:hover * {
 [data-radix-dropdown-menu-content],
 .agy-overlay,
 div.surface-glass:not([role="tooltip"]) {
-    background-color: #FFFFFF !important;
-    background: #FFFFFF !important;
+    background-color: var(--comic-surface) !important;
+    background: var(--comic-surface) !important;
     color: #000000 !important;
     border: 3px solid #000000 !important;
     box-shadow: 6px 6px 0px #000000 !important;
@@ -2122,8 +2390,8 @@ div.surface-glass button:hover {
 /* Popover Content (e.g. Radix Popovers, Context Pickers) */
 [data-radix-popover-content],
 div[class*="popover-content"] {
-    background-color: #FFFFFF !important;
-    background: #FFFFFF !important;
+    background-color: var(--comic-surface) !important;
+    background: var(--comic-surface) !important;
     color: #000000 !important;
     border: 3.5px solid #000000 !important;
     box-shadow: 6px 6px 0px #000000 !important;
@@ -2333,7 +2601,7 @@ button.review-button * {
     height: 100vh !important;
     width: 500px !important;
     max-width: 90vw !important;
-    background: #F4EEDD !important;
+    background: var(--comic-ground) !important;
     border-left: 3.5px solid #000000 !important;
     box-shadow: -8px 0px 0px #000000 !important;
     z-index: 999995 !important;
@@ -2385,7 +2653,7 @@ button.review-button * {
 }
 
 #antigravity-skills-drawer .ag-drawer-action-btn {
-    background: #FFFFFF !important;
+    background: var(--comic-surface) !important;
     border: 2px solid #000000 !important;
     box-shadow: 2px 2px 0px #000000 !important;
     color: #000000 !important;
@@ -2408,7 +2676,7 @@ button.review-button * {
 }
 
 #antigravity-skills-drawer .ag-drawer-close-btn {
-    background: #FFFFFF !important;
+    background: var(--comic-surface) !important;
     border: 2.5px solid #000000 !important;
     box-shadow: 2.5px 2.5px 0px #000000 !important;
     color: #000000 !important;
@@ -2434,13 +2702,13 @@ button.review-button * {
 #antigravity-skills-drawer .ag-drawer-search-wrap {
     padding: 14px 18px !important;
     border-bottom: 3px solid #000000 !important;
-    background: #EBE5D5 !important;
+    background: var(--comic-surface-header) !important;
     flex-shrink: 0 !important;
 }
 
 #antigravity-skills-drawer .ag-drawer-search {
     width: 100% !important;
-    background: #FFFFFF !important;
+    background: var(--comic-surface) !important;
     border: 2.5px solid #000000 !important;
     border-radius: 8px !important;
     box-shadow: 3px 3px 0px #000000 !important;
@@ -2471,9 +2739,9 @@ button.review-button * {
     display: flex !important;
     flex-direction: column !important;
     gap: 12px !important;
-    background: #F4EEDD !important;
+    background: var(--comic-ground) !important;
     scrollbar-width: thin !important;
-    scrollbar-color: #000000 #EBE5D5 !important;
+    scrollbar-color: #FFE600 var(--comic-ground) !important;
 }
 
 #antigravity-skills-drawer .ag-drawer-content::-webkit-scrollbar {
@@ -2482,7 +2750,7 @@ button.review-button * {
 }
 
 #antigravity-skills-drawer .ag-drawer-content::-webkit-scrollbar-track {
-    background: #EBE5D5 !important;
+    background: var(--comic-surface-header) !important;
     border-left: 2px solid #000000 !important;
 }
 
@@ -2501,7 +2769,7 @@ button.review-button * {
     border-radius: 8px !important;
     box-shadow: 3.5px 3.5px 0px #000000 !important;
     overflow: hidden !important;
-    background: #FFFFFF !important;
+    background: var(--comic-surface) !important;
     flex-shrink: 0 !important;
     min-height: max-content !important;
     margin-bottom: 4px !important;
@@ -2517,7 +2785,7 @@ button.review-button * {
     font-size: 13px !important;
     font-weight: 900 !important;
     color: #000000 !important;
-    background: #FFFFFF !important;
+    background: var(--comic-surface) !important;
     font-family: var(--font-sans, "Google Sans", system-ui, sans-serif) !important;
     border-bottom: 2.5px solid transparent !important;
     transition: background 0.15s ease !important;
@@ -2557,7 +2825,7 @@ button.review-button * {
 }
 
 #antigravity-skills-drawer .ag-skill-card {
-    background: #FFFFFF !important;
+    background: var(--comic-surface) !important;
     border: 2px solid #000000 !important;
     border-radius: 6px !important;
     box-shadow: 2px 2px 0px #000000 !important;
@@ -2606,7 +2874,7 @@ button.review-button * {
     height: 17px !important;
     border: 2px solid #000000 !important;
     border-radius: 4px !important;
-    background: #FFFFFF !important;
+    background: var(--comic-surface) !important;
     cursor: pointer !important;
     display: inline-grid !important;
     place-content: center !important;
@@ -2701,7 +2969,7 @@ button.review-button * {
 #antigravity-skills-drawer .ag-skill-tag {
     font-size: 10px !important;
     color: #000000 !important;
-    background: #EBE5D5 !important;
+    background: var(--comic-surface-header) !important;
     border: 1px solid #000000 !important;
     padding: 1px 6px !important;
     border-radius: 4px !important;
@@ -2711,7 +2979,7 @@ button.review-button * {
 
 /* Header Multi-Select Pill */
 #antigravity-skills-drawer .ag-drawer-header-pill {
-    background: #FFFFFF !important;
+    background: var(--comic-surface) !important;
     border: 2px solid #000000 !important;
     box-shadow: 2px 2px 0px #000000 !important;
     color: #000000 !important;
@@ -2737,7 +3005,7 @@ button.review-button * {
 }
 
 #antigravity-skills-drawer .ag-filter-btn {
-    background: #FFFFFF !important;
+    background: var(--comic-surface) !important;
     border: 2px solid #000000 !important;
     box-shadow: 1.5px 1.5px 0px #000000 !important;
     color: #000000 !important;
@@ -2772,7 +3040,7 @@ button.review-button * {
 }
 
 #antigravity-skills-drawer .ag-category-select-btn {
-    background: #FFFFFF !important;
+    background: var(--comic-surface) !important;
     border: 1.5px solid #000000 !important;
     box-shadow: 1px 1px 0px #000000 !important;
     color: #000000 !important;
@@ -2882,7 +3150,7 @@ button.review-button * {
     display: inline-flex !important;
     align-items: center !important;
     gap: 6px !important;
-    background: #FFFFFF !important;
+    background: var(--comic-surface) !important;
     border: 2px solid #000000 !important;
     box-shadow: 1.5px 1.5px 0px #000000 !important;
     color: #000000 !important;
@@ -2924,7 +3192,7 @@ button.review-button * {
 }
 
 #antigravity-skills-drawer .ag-btn-copy {
-    background: #FFFFFF !important;
+    background: var(--comic-surface) !important;
     border: 2.5px solid #000000 !important;
     box-shadow: 2.5px 2.5px 0px #000000 !important;
     color: #000000 !important;
@@ -2932,7 +3200,7 @@ button.review-button * {
 }
 
 #antigravity-skills-drawer .ag-btn-copy:hover {
-    background: #F4EEDD !important;
+    background: var(--comic-ground) !important;
     transform: translate(1px, 1px) !important;
     box-shadow: 1.5px 1.5px 0px #000000 !important;
 }
@@ -2960,7 +3228,7 @@ button.review-button * {
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
-    background: #EBE5D5 !important;
+    background: var(--comic-surface-header) !important;
     flex-shrink: 0 !important;
     font-family: var(--font-mono, monospace) !important;
 }
@@ -3045,7 +3313,7 @@ textarea,
    ========================================================================== */
 * {
     scrollbar-width: thin !important;
-    scrollbar-color: #FFE600 #F4EEDD !important;
+    scrollbar-color: #FFE600 var(--comic-ground) !important;
 }
 
 ::-webkit-scrollbar {
@@ -3055,7 +3323,7 @@ textarea,
 }
 
 ::-webkit-scrollbar-track {
-    background: #F4EEDD !important;
+    background: var(--comic-ground) !important;
     border-left: 2px solid #000000 !important;
 }
 
@@ -3071,7 +3339,7 @@ textarea,
 }
 
 ::-webkit-scrollbar-corner {
-    background: #F4EEDD !important;
+    background: var(--comic-ground) !important;
 }
 
 /* Explicitly override overlay-scrollbars hiding rules */
@@ -3085,5 +3353,38 @@ textarea,
 .overlay-scrollbars,
 .overlay-scrollbars * {
     scrollbar-width: thin !important;
-    scrollbar-color: #FFE600 #F4EEDD !important;
+    scrollbar-color: #FFE600 var(--comic-ground) !important;
+}
+
+/* ==========================================================================
+   OBSIDIAN COMIC DARK MODE REFINEMENTS
+   ========================================================================== */
+body.dark div[role="dialog"] div[data-testid="settings-sidebar"],
+body.dark-theme div[role="dialog"] div[data-testid="settings-sidebar"],
+body.theme-dark div[role="dialog"] div[data-testid="settings-sidebar"] {
+    background-color: var(--comic-sidebar) !important;
+    border-right: 2.5px solid #000000 !important;
+}
+
+body.dark div[role="dialog"] .agy-card,
+body.dark-theme div[role="dialog"] .agy-card,
+body.theme-dark div[role="dialog"] .agy-card {
+    background-color: var(--comic-surface) !important;
+    border: 2.5px solid #000000 !important;
+    box-shadow: 3px 3px 0px #000000 !important;
+}
+
+body.dark div[role="dialog"] input,
+body.dark div[role="dialog"] button.agy-select-trigger,
+body.dark-theme div[role="dialog"] input,
+body.dark-theme div[role="dialog"] button.agy-select-trigger {
+    background-color: var(--comic-surface-subtle) !important;
+    color: #FFFFFF !important;
+    border: 2px solid #000000 !important;
+}
+
+body.dark div[role="dialog"] .text-muted-foreground,
+body.dark-theme div[role="dialog"] .text-muted-foreground,
+body.theme-dark div[role="dialog"] .text-muted-foreground {
+    color: var(--comic-text-muted) !important;
 }

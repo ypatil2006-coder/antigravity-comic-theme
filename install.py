@@ -20,6 +20,26 @@ from pathlib import Path
 
 THEME_CSS_FILE = Path(__file__).parent / "theme.css"
 
+def get_active_theme_file():
+    candidates = [
+        get_user_home() / ".config" / "Antigravity" / "theme_selection.json",
+        Path.home() / ".config" / "Antigravity" / "theme_selection.json",
+        Path("/home/yash/.config/Antigravity/theme_selection.json"),
+        Path("/home/yash/.config/Antigravity-Profiles/Account-1/HOME/.config/Antigravity/theme_selection.json")
+    ]
+    for cfg in candidates:
+        if cfg.exists():
+            try:
+                with open(cfg, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                    if data.get("active") == "transparency":
+                        boxed = Path("/home/yash/Projects/antigravity-custom-theme/antigravity-boxed-terminal.css")
+                        if boxed.exists():
+                            return boxed
+            except Exception:
+                pass
+    return Path(__file__).parent / "theme.css"
+
 def get_platform_info():
     p = sys.platform.lower()
     if p.startswith("linux"):
@@ -312,14 +332,17 @@ def run_watcher():
     cached_css = ""
     known_targets = set()
 
+    last_theme_path = None
     while True:
         try:
-            # 1. Detect if theme.css was modified on disk
-            if THEME_CSS_FILE.exists():
-                mtime = THEME_CSS_FILE.stat().st_mtime
-                if mtime != last_mtime:
+            # 1. Detect if active theme or selection was modified on disk
+            theme_file = get_active_theme_file()
+            if theme_file.exists():
+                mtime = theme_file.stat().st_mtime
+                if mtime != last_mtime or theme_file != last_theme_path:
                     last_mtime = mtime
-                    with open(THEME_CSS_FILE, "r", encoding="utf-8") as f:
+                    last_theme_path = theme_file
+                    with open(theme_file, "r", encoding="utf-8") as f:
                         cached_css = f.read()
                     known_targets.clear()  # Force re-injection to all targets on CSS change
                     inject_theme(cached_css, verbose=False)

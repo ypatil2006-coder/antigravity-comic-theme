@@ -1227,6 +1227,19 @@ tr:nth-child(even) td {
 /* ==========================================================================
    9. MODALS, SETTINGS & CUSTOMIZATION DIALOGS (With Active Tab Highlights)
    ========================================================================== */
+
+/* Modal & Dialog Backdrop Scrim (Soft focus blur for dialog text readability) */
+.settings-modal-backdrop,
+div[class*="settings-modal-backdrop"],
+[data-radix-dialog-overlay],
+[data-base-ui-portal] > div.fixed.inset-0,
+div.fixed.inset-0[class*="z-"] {
+    background-color: rgba(0, 0, 0, 0.45) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    transition: backdrop-filter 0.2s ease, background-color 0.2s ease !important;
+}
+
 div[role="dialog"],
 div[data-testid="settings-modal"] {
     background-color: #F4EEDD !important;
@@ -1234,6 +1247,15 @@ div[data-testid="settings-modal"] {
     border-radius: 20px !important;
     box-shadow: 10px 10px 0px #000000 !important;
     color: #000000 !important;
+    overflow: hidden !important;
+}
+
+/* Ensure inner wrappers respect the dialog's rounded corners */
+div[role="dialog"] > div,
+div[role="dialog"] .flex-1.overflow-hidden,
+.settings-modal-container > div {
+    border-radius: 16px !important;
+    overflow: hidden !important;
 }
 
 div[role="dialog"] * {
@@ -1305,12 +1327,14 @@ div[role="dialog"] *,
     contain: none !important;
 }
 
+/* Hide duplicate native rectangular scrollbars that cause yellow corner bleed */
 div[role="dialog"] .overflow-auto,
 div[role="dialog"] .overflow-y-auto,
+div[role="dialog"] [class*="overflow-auto"],
+div[role="dialog"] [class*="overflow-y-auto"],
 .settings-modal-container .overflow-auto,
 .settings-modal-container .overflow-y-auto {
-    scrollbar-width: thin !important;
-    scrollbar-color: #FFE600 #F4EEDD !important;
+    scrollbar-width: none !important;
     overscroll-behavior: auto !important;
     overscroll-behavior-y: auto !important;
 }
@@ -1321,28 +1345,27 @@ div[role="dialog"] .overflow-y-auto::-webkit-scrollbar,
 .settings-modal-container ::-webkit-scrollbar,
 .settings-modal-container .overflow-auto::-webkit-scrollbar,
 .settings-modal-container .overflow-y-auto::-webkit-scrollbar {
-    display: block !important;
-    width: 10px !important;
-    height: 10px !important;
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
 }
 
-div[role="dialog"] ::-webkit-scrollbar-track,
-.settings-modal-container ::-webkit-scrollbar-track {
-    background: #F4EEDD !important;
-    border-left: 2px solid #000000 !important;
+/* Tactile floating scroll indicator cleanly recessed inside dialog */
+div[role="dialog"] div[class*="group absolute"][class*="right-"],
+.settings-modal-container div[class*="group absolute"][class*="right-"] {
+    right: 8px !important;
+    top: 14px !important;
+    bottom: 14px !important;
+    z-index: 40 !important;
 }
 
-div[role="dialog"] ::-webkit-scrollbar-thumb,
-.settings-modal-container ::-webkit-scrollbar-thumb {
-    background: #FFE600 !important;
-    border: 2px solid #000000 !important;
-    border-radius: 6px !important;
-    cursor: pointer !important;
-}
-
-div[role="dialog"] ::-webkit-scrollbar-thumb:hover,
-.settings-modal-container ::-webkit-scrollbar-thumb:hover {
-    background: #FFD000 !important;
+div[role="dialog"] div[class*="group absolute"][class*="right-"] > div,
+.settings-modal-container div[class*="group absolute"][class*="right-"] > div {
+    background-color: #FFE600 !important;
+    border: 1.5px solid #000000 !important;
+    box-shadow: 1px 1px 0px #000000 !important;
+    border-radius: 9999px !important;
+    width: 7px !important;
 }
 
 /* Fix inner non-scrolling overflow container trapping wheel events */
@@ -2720,32 +2743,67 @@ button.review-button * {
     font-weight: 900 !important;
 }
 
+#antigravity-skills-drawer .ag-drawer-selection-bar {
+    position: sticky !important;
+    bottom: 0 !important;
+    background: #FFE600 !important;
+    border-top: 3px solid #000000 !important;
+    box-shadow: 0 -4px 0px #000000 !important;
+    padding: 12px 18px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    z-index: 100 !important;
+    flex-shrink: 0 !important;
+    user-select: none !important;
+}
+
+#antigravity-skills-drawer .ag-selection-top {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    user-select: none !important;
+}
+
 #antigravity-skills-drawer .ag-selection-clear-btn {
-    background: transparent !important;
-    border: none !important;
+    background: #FFFFFF !important;
+    border: 1.5px solid #000000 !important;
+    box-shadow: 1.5px 1.5px 0px #000000 !important;
     color: #000000 !important;
     font-size: 11px !important;
-    font-weight: 800 !important;
+    font-weight: 900 !important;
     cursor: pointer !important;
-    text-decoration: underline !important;
-    padding: 0 !important;
+    text-decoration: none !important;
+    padding: 3px 8px !important;
+    border-radius: 4px !important;
     font-family: var(--font-mono, monospace) !important;
+    user-select: none !important;
+    transition: all 0.15s ease !important;
 }
 
 #antigravity-skills-drawer .ag-selection-clear-btn:hover {
-    color: #FF0000 !important;
+    background: #FF3B30 !important;
+    color: #FFFFFF !important;
+    transform: translate(1px, 1px) !important;
+    box-shadow: 0.5px 0.5px 0px #000000 !important;
+}
+
+#antigravity-skills-drawer .ag-selection-clear-btn:active {
+    transform: translate(1.5px, 1.5px) !important;
+    box-shadow: none !important;
 }
 
 #antigravity-skills-drawer .ag-selection-chips-scroll {
     display: flex !important;
-    gap: 6px !important;
+    gap: 8px !important;
     overflow-x: auto !important;
-    padding-bottom: 4px !important;
+    padding: 4px 2px 8px 2px !important;
     scrollbar-width: thin !important;
+    user-select: none !important;
 }
 
 #antigravity-skills-drawer .ag-selection-chips-scroll::-webkit-scrollbar {
-    height: 4px !important;
+    height: 5px !important;
 }
 
 #antigravity-skills-drawer .ag-selection-chips-scroll::-webkit-scrollbar-thumb {
@@ -2759,27 +2817,46 @@ button.review-button * {
     gap: 6px !important;
     background: #FFFFFF !important;
     border: 2px solid #000000 !important;
-    box-shadow: 1.5px 1.5px 0px #000000 !important;
+    box-shadow: 2px 2px 0px #000000 !important;
     color: #000000 !important;
     font-size: 11px !important;
     font-weight: 800 !important;
-    padding: 2px 8px !important;
-    border-radius: 5px !important;
+    padding: 3px 6px 3px 10px !important;
+    border-radius: 6px !important;
     white-space: nowrap !important;
+    cursor: pointer !important;
+    user-select: none !important;
+    transition: all 0.15s ease !important;
+}
+
+#antigravity-skills-drawer .ag-selection-chip:hover {
+    background: #FFF5CC !important;
+    border-color: #000000 !important;
 }
 
 #antigravity-skills-drawer .ag-chip-remove {
     cursor: pointer !important;
     color: #000000 !important;
+    background: rgba(0, 0, 0, 0.08) !important;
     font-size: 13px !important;
     font-weight: 900 !important;
     line-height: 1 !important;
-    display: inline-block !important;
-    padding: 0 1px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 18px !important;
+    height: 18px !important;
+    border-radius: 9999px !important;
+    border: 1px solid rgba(0, 0, 0, 0.3) !important;
+    padding: 0 !important;
+    user-select: none !important;
+    transition: all 0.15s ease !important;
 }
 
 #antigravity-skills-drawer .ag-chip-remove:hover {
-    color: #FF0000 !important;
+    background: #FF3B30 !important;
+    color: #FFFFFF !important;
+    border-color: #000000 !important;
 }
 
 #antigravity-skills-drawer .ag-selection-actions {
@@ -2863,33 +2940,14 @@ button.review-button * {
     text-rendering: optimizeLegibility !important;
 }
 
-/* 2. Hardware Composited Viewports & Momentum Scrolling */
+/* 2. Hardware Composited Viewports & Momentum Scrolling (Clean natural 120Hz scrolling) */
 [data-testid="autoscroll-viewport"],
 [data-testid="conversation-list-sidebar"],
 #antigravity-skills-drawer .ag-drawer-content,
 div.bg-sidebar .overflow-y-auto {
-    scroll-behavior: smooth !important;
+    scroll-behavior: auto !important;
     overscroll-behavior-y: contain !important;
-    will-change: scroll-position !important;
-    contain: content !important;
-}
-
-/* 3. Content-Visibility: Skip offscreen DOM layout & paint for instant 120fps scrolling */
-.agy-sidebar-row {
-    content-visibility: auto !important;
-    contain-intrinsic-size: 0 38px !important;
-}
-
-#antigravity-skills-drawer .ag-skill-card {
-    content-visibility: auto !important;
-    contain-intrinsic-size: 0 76px !important;
-}
-
-[data-testid="model-selector-panel"] [role="menuitem"],
-[data-testid="model-selector-panel"] [role="option"],
-div.agy-overlay [role="menuitem"] {
-    content-visibility: auto !important;
-    contain-intrinsic-size: 0 42px !important;
+    overflow-x: hidden !important;
 }
 
 /* 4. GPU Layer Backing for Heavy Neubrutalism Shadows & Borders */
@@ -2920,23 +2978,23 @@ textarea,
    ========================================================================== */
 * {
     scrollbar-width: thin !important;
-    scrollbar-color: #FFE600 #F4EEDD !important;
+    scrollbar-color: #FFE600 transparent !important;
 }
 
 ::-webkit-scrollbar {
-    width: 10px !important;
-    height: 10px !important;
+    width: 8px !important;
+    height: 8px !important;
     display: block !important;
 }
 
 ::-webkit-scrollbar-track {
-    background: #F4EEDD !important;
-    border-left: 2px solid #000000 !important;
+    background: transparent !important;
+    border: none !important;
 }
 
 ::-webkit-scrollbar-thumb {
     background: #FFE600 !important;
-    border: 2px solid #000000 !important;
+    border: 1.5px solid #000000 !important;
     border-radius: 6px !important;
     cursor: pointer !important;
 }
@@ -2946,19 +3004,19 @@ textarea,
 }
 
 ::-webkit-scrollbar-corner {
-    background: #F4EEDD !important;
+    background: transparent !important;
 }
 
 /* Explicitly override overlay-scrollbars hiding rules */
 .overlay-scrollbars ::-webkit-scrollbar,
 .overlay-scrollbars :not(.md-table-scroll)::-webkit-scrollbar {
     display: block !important;
-    width: 10px !important;
-    height: 10px !important;
+    width: 8px !important;
+    height: 8px !important;
 }
 
 .overlay-scrollbars,
 .overlay-scrollbars * {
     scrollbar-width: thin !important;
-    scrollbar-color: #FFE600 #F4EEDD !important;
+    scrollbar-color: #FFE600 transparent !important;
 }
